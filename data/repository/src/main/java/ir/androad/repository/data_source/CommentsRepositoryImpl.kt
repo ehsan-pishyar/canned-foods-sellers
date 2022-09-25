@@ -1,4 +1,6 @@
 package ir.androad.repository.data_source
 
-class CommentsRepositoryImpl {
+import ir.androad.domain.repositories.CommentsRepository
+
+class CommentsRepositoryImpl: CommentsRepository {
 }

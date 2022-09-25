@@ -1,4 +1,6 @@
 package ir.androad.repository.data_source
 
-class UserRepositoryImpl {
+import ir.androad.domain.repositories.UserRepository
+
+class UserRepositoryImpl: UserRepository {
 }

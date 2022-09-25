@@ -1,4 +1,6 @@
 package ir.androad.repository.data_source
 
-class ResultRepositoryImpl {
+import ir.androad.domain.repositories.ResultRepository
+
+class ResultRepositoryImpl: ResultRepository {
 }

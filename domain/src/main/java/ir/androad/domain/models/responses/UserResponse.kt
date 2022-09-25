@@ -1,13 +1,9 @@
-package ir.androad.network.models.responses
+package ir.androad.domain.models.responses
 
-import ir.androad.network.models.ResponseErrors
-import ir.androad.network.models.UserDto
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import ir.androad.domain.models.ResponseErrors
+import ir.androad.domain.models.User
 
-@Serializable
-data class UserResponseDto(
-    @SerialName("user")
-    val userDto: UserDto?,
+data class UserResponse (
+    val userDto: User?,
     val errors: List<ResponseErrors?>?
 )

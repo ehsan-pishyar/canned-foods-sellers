@@ -1,37 +1,21 @@
-package ir.androad.network.models
+package ir.androad.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SellerCategoryDto(
+data class SellerCategory(
     val id: Int?,
     val title: String?,
-
-    @SerialName("image_path")
     val imagePath: String?
 )
 
-@Serializable
-data class ResultCategoryDto(
+data class ResultCategory(
     val id: Int?,
     val title: String?,
-
-    @SerialName("image_path")
     val imagePath: String?,
-
-    @SerialName("seller_category_id")
     val sellerCategoryId: Int?
 )
 
-@Serializable
-data class FoodCategoryDto(
+data class FoodCategory(
     val id: Int?,
     val title: String?,
-
-    @SerialName("image_path")
     val imagePath: String?,
-
-    @SerialName("result_category_id")
     val resultCategoryId: Int?
 )

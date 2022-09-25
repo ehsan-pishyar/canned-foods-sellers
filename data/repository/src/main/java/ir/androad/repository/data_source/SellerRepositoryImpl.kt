@@ -1,4 +1,6 @@
 package ir.androad.repository.data_source
 
-class SellerRepositoryImpl {
+import ir.androad.domain.repositories.SellerRepository
+
+class SellerRepositoryImpl: SellerRepository {
 }

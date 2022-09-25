@@ -1,30 +1,15 @@
-package ir.androad.network.models
+package ir.androad.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SellerCommentDto(
+data class SellerComment(
     val id: Long?,
-
-    @SerialName("from_customer_id")
     val fromCustomerId: Long?,
-
     val message: String?,
-
-    @SerialName("date_created")
     val dateCreated: String?
 )
 
-@Serializable
-data class ResultCommentDto(
+data class ResultComment(
     val id: Long?,
-
-    @SerialName("from_customer_id")
     val fromCustomerId: Long?,
-
     val message: String?,
-
-    @SerialName("date_created")
     val dateCreated: String?
 )

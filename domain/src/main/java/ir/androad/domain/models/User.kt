@@ -1,17 +1,9 @@
-package ir.androad.network.models
+package ir.androad.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class UserDto (
+data class User (
     val id: Long?,
     val email: String?,
     val password: String?,
-
-    @SerialName("user_type")
     val userType: String?,
-
-    @SerialName("date_created")
     val dateCreated: String?,
 )

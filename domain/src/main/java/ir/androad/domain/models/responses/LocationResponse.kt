@@ -1,24 +1,20 @@
-package ir.androad.network.models.responses
+package ir.androad.domain.models.responses
 
-import ir.androad.network.models.CityDto
-import kotlinx.serialization.Serializable
+import ir.androad.domain.models.City
 
-@Serializable
-data class StateResponseDto(
+data class StateResponse (
     val id: Int?,
     val title: String?,
-    val cities: CityDto?
+    val cities: City? // TODO: fix this shit
 )
 
-@Serializable
-data class CityResponseDto(
+data class CityResponse (
     val id: Int?,
     val title: String?,
     val state: String?
 )
 
-@Serializable
-data class LocationResponseDto(
+data class LocationResponse (
     val id: Long?,
     val title: String?,
     val lat: Double?,

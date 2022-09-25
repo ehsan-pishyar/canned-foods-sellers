@@ -1,4 +1,6 @@
 package ir.androad.repository.data_source
 
-class LocationRepositoryImpl {
+import ir.androad.domain.repositories.LocationRepository
+
+class LocationRepositoryImpl: LocationRepository {
 }

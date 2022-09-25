@@ -1,4 +1,4 @@
-package ir.androad.network.utils
+package ir.androad.domain.utils
 
 enum class ErrorCode(val message: String) {
     INVALID_USER("Invalid user object. Check your JSON values."),

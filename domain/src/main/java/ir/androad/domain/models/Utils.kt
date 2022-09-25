@@ -1,15 +1,8 @@
-package ir.androad.network.models
+package ir.androad.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SellerOpenHoursDto (
+data class SellerOpenHours (
     val id: Long?,
-
-    @SerialName("seller_id")
     val sellerId: Long?,
-
     val saturday: Int?,
     val sunday: Int?,
     val monday: Int?,
@@ -19,13 +12,9 @@ data class SellerOpenHoursDto (
     val friday: Int?
 )
 
-@Serializable
-data class SellerCloseHoursDto (
+data class SellerCloseHours (
     val id: Long?,
-
-    @SerialName("seller_id")
     val sellerId: Long?,
-
     val saturday: Int?,
     val sunday: Int?,
     val monday: Int?,
@@ -35,22 +24,11 @@ data class SellerCloseHoursDto (
     val friday: Int?
 )
 
-@Serializable
-data class CustomerPurchaseHistoryDto (
+data class CustomerPurchaseHistory (
     val id: Long?,
-
-    @SerialName("customer_id")
     val customerId: Long?,
-
-    @SerialName("order_id")
     val orderId: Long?,
-
-    @SerialName("seller_id")
     val sellerId: Long?,
-
-    @SerialName("order_date")
     val orderDate: String?,
-
-    @SerialName("order_status")
     val orderStatus: String?
 )

@@ -1,30 +1,20 @@
-package ir.androad.network.models
+package ir.androad.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class StateDto(
+data class State(
     val id: Int?,
     val title: String?
 )
 
-@Serializable
-data class CityDto(
+data class City(
     val id: Int?,
     val title: String?,
-
-    @SerialName("state_id")
     val stateId: Int?
 )
 
-@Serializable
-data class LocationDto(
+data class Location(
     val id: Long?,
     val title: String?,
     val lat: Double?,
     val lon: Double?,
-
-    @SerialName("city_id")
     val cityId: Int?
 )

@@ -1,24 +1,13 @@
-package ir.androad.network.models
+package ir.androad.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SellerRatingDto(
+data class SellerRating(
     val id: Long?,
-
-    @SerialName("from_customer_id")
     val fromCustomerId: Long?,
-
     val rating: Int?,
 )
 
-@Serializable
-data class ResultRatingDto(
+data class ResultRating(
     val id: Long?,
-
-    @SerialName("from_customer_id")
     val fromCustomerId: Long?,
-
     val rating: Int?,
 )

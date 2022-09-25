@@ -1,4 +1,6 @@
 package ir.androad.repository.data_source
 
-class RatingsRepositoryImpl {
+import ir.androad.domain.repositories.RatingsRepository
+
+class RatingsRepositoryImpl: RatingsRepository {
 }

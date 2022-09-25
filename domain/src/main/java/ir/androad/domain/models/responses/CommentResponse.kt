@@ -1,22 +1,13 @@
-package ir.androad.network.models.responses
+package ir.androad.domain.models.responses
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class SellerCommentResponseDto(
+data class SellerCommentResponse (
     val from: String?,
     val message: String?,
-
-    @SerialName("date_created")
     val dateCreated: String?
 )
 
-@Serializable
-data class ResultCommentResponseDto(
+data class ResultCommentResponse (
     val from: String?,
     val message: String?,
-
-    @SerialName("date_created")
     val dateCreated: String?
 )
