@@ -1,13 +1,13 @@
 package ir.androad.cache.models.responses
 
-data class SellerCommentResponse(
+data class SellerCommentResponseEntity (
     val from: String?,
     val message: String?,
-    val date_created: String?
+    val dateCreated: String?
 )
 
-data class ResultCommentResponse(
+data class ResultCommentResponseEntity (
     val from: String?,
     val message: String?,
-    val date_created: String?
+    val dateCreated: String?
 )

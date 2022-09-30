@@ -2,19 +2,19 @@ package ir.androad.cache.models.responses
 
 import ir.androad.cache.models.CityEntity
 
-data class StateResponse(
+data class StateResponseEntity (
     val id: Int?,
     val title: String?,
     val cities: CityEntity?
 )
 
-data class CityResponse(
+data class CityResponseEntity (
     val id: Int?,
     val title: String?,
     val state: String?
 )
 
-data class LocationResponse(
+data class LocationResponseEntity(
     val id: Long?,
     val title: String?,
     val lat: Double?,

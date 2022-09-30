@@ -1,7 +1,6 @@
-package ir.androad.repository.utils
+package ir.androad.domain.utils
 
-import ir.androad.cache.models.UserEntity
-import ir.androad.domain.utils.ServiceResult
+import ir.androad.domain.models.User
 
 class ValidateUserEmail {
     companion object {
@@ -16,8 +15,8 @@ class ValidateUserEmail {
         )
     }
 
-    operator fun invoke(userEntity: UserEntity): ServiceResult<Boolean> {
-        return if (userEntity.email.isBlank() || !userEntity.email.matches(EMAIL_REGEX)) {
+    operator fun invoke(user: User): ServiceResult<Boolean> {
+        return if (user.email!!.isBlank() || !user.email.matches(EMAIL_REGEX)) {
             ServiceResult.Error(false)
 //            ServiceResult.Error(ErrorCode.INVALID_EMAIL)
         } else {

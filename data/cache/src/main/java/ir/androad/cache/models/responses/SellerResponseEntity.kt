@@ -1,32 +1,37 @@
 package ir.androad.cache.models.responses
 
-data class SellerResponse(
-    val id: Long? = 0L,
-    val title: String? = "",
-    val description: String? = "",
-    val logo: String? = "",
-    val banner: String? = "",
-    val delivery_fee: Long? = 0L,
-    val delivery_duration: Int? = 0
-)
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import ir.androad.cache.utils.Constants
 
-data class SellerListResponse(
-    val total_results: Int = 0,
-    val pages: Int = 1,
-    val sellers: List<SellerResponse?> = emptyList()
-)
-
-data class SellerDetailsResponse(
+data class SellerResponseEntity (
     val id: Long?,
     val title: String?,
     val description: String?,
     val logo: String?,
     val banner: String?,
-    val location: LocationResponse? = null,
-    val results: List<ResultResponse?>? = emptyList(),
-    val comments: List<SellerCommentResponse?> = emptyList(),
-    val delivery_fee: Long?,
-    val delivery_duration: Int?,
-    val phone_number: String?,
-    val date_created: String?
+    val deliveryFee: Long?,
+    val deliveryDuration: Int?
+)
+
+data class SellerListResponseEntity (
+    val totalResults: Int?,
+    val pages: Int?,
+    val sellers: List<SellerResponseEntity?>?
+)
+
+data class SellerDetailsResponseEntity (
+    val id: Long?,
+    val title: String?,
+    val description: String?,
+    val logo: String?,
+    val banner: String?,
+    val location: LocationResponseEntity?,
+    val results: List<ResultResponseEntity?>?,
+    val comments: List<SellerCommentResponseEntity?>?,
+    val deliveryFee: Long?,
+    val deliveryDuration: Int?,
+    val phoneNumber: String?,
+    val dateCreated: String?
 )

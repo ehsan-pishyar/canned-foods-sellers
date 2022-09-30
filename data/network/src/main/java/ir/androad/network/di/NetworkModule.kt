@@ -9,9 +9,11 @@ import ir.androad.network.ApiService
 import ir.androad.network.utils.Constants
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Converter
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
@@ -38,17 +40,16 @@ object NetworkModule {
     @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
-    fun retrofitProvider() {
-        val contentType = "application/json".toMediaType()
-        val kotlinxConverterFactory = Json.asConverterFactory(contentType)
+    fun converterFactoryProvider(contentType: MediaType = "application/json".toMediaType()) =
+        Json.asConverterFactory(contentType)
 
-        // Adding this converter factory here
-        // while building retrofit object.
+    @Provides
+    @Singleton
+    fun retrofitProvider(converterFactory: Converter.Factory) =
         Retrofit.Builder()
-            .addConverterFactory(kotlinxConverterFactory)
+            .addConverterFactory(converterFactory)
             .baseUrl(Constants.BASE_URL)
             .build()
-    }
 
     @Provides
     @Singleton

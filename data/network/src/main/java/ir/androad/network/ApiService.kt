@@ -1,6 +1,7 @@
 package ir.androad.network
 
 import ir.androad.network.models.*
+import ir.androad.network.models.responses.UserResponseDto
 import retrofit2.http.*
 
 interface ApiService {
@@ -9,7 +10,7 @@ interface ApiService {
     @POST("/users/create")
     suspend fun insertUser(
         @Body user: UserDto
-    ): UserDto
+    ): UserResponseDto
 
     @GET("/users")
     suspend fun getUserById(

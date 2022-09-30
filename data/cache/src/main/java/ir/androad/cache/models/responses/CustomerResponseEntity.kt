@@ -1,23 +1,23 @@
 package ir.androad.cache.models.responses
 
-data class CustomerResponse(
+data class CustomerResponseEntity (
     val id: Long?,
-    val first_name: String?,
-    val last_name: String?,
+    val firstName: String?,
+    val lastName: String?,
     val email: String?,
     val picture: String?,
     val sex: String?,
     val location: String?,
-    val date_created: String?
+    val dateCreated: String?
 )
 
-data class CustomerDetailsResponse(
+data class CustomerDetailsResponseEntity (
     val id: Long?,
-    val first_name: String?,
-    val last_name: String?,
+    val firstName: String?,
+    val lastName: String?,
     val email: String?,
     val picture: String?,
     val sex: String?,
-    val location: LocationResponse? = null,
-    val date_created: String?
+    val location: LocationResponseEntity?,
+    val dateCreated: String?
 )

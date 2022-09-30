@@ -1,29 +1,34 @@
 package ir.androad.cache.models.responses
 
-data class ResultResponse(
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import ir.androad.cache.utils.Constants
+
+data class ResultResponseEntity (
     val id: Long?,
     val title: String?,
     val description: String?,
-    val image_path: String?,
+    val imagePath: String?,
     val price: Long?,
     val discount: Int?,
-    val prepare_duration: Int?,
+    val prepareDuration: Int?,
     val seller: String?,
-    val food_category: String? = null,
-    val date_created: String?
+    val foodCategory: String?,
+    val dateCreated: String?
 )
 
-data class ResultDetailsResponse(
+data class ResultDetailsResponseEntity (
     val id: Long?,
     val title: String?,
     val description: String?,
-    val image_path: String?,
+    val imagePath: String?,
     val price: Long?,
     val discount: Int?,
-    val prepare_duration: Int?,
-    val seller: SellerResponse?,
-    val food_category: String?,
+    val prepareDuration: Int?,
+    val seller: SellerResponseEntity?,
+    val foodCategory: String?,
     val rating: Double?,
-    val comments: List<ResultCommentResponse?> = emptyList(),
-    val date_created: String?
+    val comments: List<ResultCommentResponseEntity?>?,
+    val dateCreated: String?
 )

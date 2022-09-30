@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Canned Foods</string>
+    <string name="title_login">Module Title</string>
+    <string name="title_splash">Splash</string>
 </resources>

@@ -4,6 +4,6 @@ import ir.androad.domain.models.ResponseErrors
 import ir.androad.domain.models.User
 
 data class UserResponse (
-    val userDto: User?,
+    val user: User?,
     val errors: List<ResponseErrors?>?
 )
