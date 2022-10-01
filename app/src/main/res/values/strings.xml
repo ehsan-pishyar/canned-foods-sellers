@@ -2,4 +2,6 @@
     <string name="app_name">Canned Foods</string>
     <string name="title_login">Module Title</string>
     <string name="title_splash">Splash</string>
+    <string name="title_welcome">Welcome</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
 </resources>

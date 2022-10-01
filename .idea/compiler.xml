@@ -8,6 +8,7 @@
       <module name="Canned_Foods.data.repository" target="18" />
       <module name="Canned_Foods.features.login" target="18" />
       <module name="Canned_Foods.features.splash" target="18" />
+      <module name="Canned_Foods.features.welcome" target="18" />
     </bytecodeTargetLevel>
   </component>
 </project>
