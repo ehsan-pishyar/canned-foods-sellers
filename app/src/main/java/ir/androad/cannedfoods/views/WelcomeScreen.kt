@@ -16,43 +16,36 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import ir.androad.cannedfoods.R
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
 
-    Box (
+    Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(Color.White)
+            .padding(15.dp)
     ) {
-        Column (
+        Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .align(Alignment.Center),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight()
-            ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.ic_launcher),
-                    contentDescription = "Cannedfood Logo",
-                    modifier = Modifier
-                        .wrapContentWidth()
-                        .wrapContentHeight(),
-                    contentScale = ContentScale.Crop
-                )
-                Text(
-                    text = "Canned Foods",
-                    color =  Color.Black,
-                    style = MaterialTheme.typography.h1,
-                )
-            }
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "Logo")
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Text(
+                text = "Canned Foods",
+                fontSize = 22.sp
+            )
         }
     }
 }

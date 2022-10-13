@@ -2,7 +2,10 @@ package ir.androad.cannedfoods.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val PrimaryColor = Color(0xFFFF8787)
+val SecondaryColor = Color(0xFFECB390)
+val DisableColor = Color(0xFFCEE5D0)
+val BlackColor = Color(0xFF333333)
+val BackgroundColor = Color(0xFFEFF1F5)
+val GrayColor = Color(0xFF696969)
+val LightGrayColor = Color(0xFF8D8D8D)
