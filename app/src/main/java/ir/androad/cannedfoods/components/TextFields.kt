@@ -1,9 +1,7 @@
 package ir.androad.cannedfoods.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -13,6 +11,9 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -24,8 +25,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import ir.androad.cannedfoods.R
 import ir.androad.cannedfoods.ui.theme.*
 
@@ -45,7 +48,7 @@ fun CBOutlinedTextField(
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    shape: RoundedCornerShape? = null,
+    shape: Dp = 12.dp,
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
@@ -65,7 +68,7 @@ fun CBOutlinedTextField(
                     onValueChange(it)
                 }
             },
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(shape),
             maxLines = maxLines,
             textStyle = style,
             placeholder = {
@@ -229,8 +232,10 @@ fun CBFilledTextFieldPreview() {
 @Composable
 fun CBStandardTextField(
     modifier: Modifier = Modifier,
-    text: String = "",
-    hint: String = "",
+    title: String? = null,
+    height: Dp = 55.dp,
+    value: String = "",
+    placeholder: String = "",
     maxLength: Int? = 100,
     error: String = "",
     style: TextStyle = TextStyle(
@@ -242,12 +247,12 @@ fun CBStandardTextField(
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    shape: RoundedCornerShape? = null,
-    leadingIcon: @Composable (() -> Unit)? = null,
-    trailingIcon: @Composable (() -> Unit)? = null,
+    shape: Dp = 12.dp,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
     isPasswordVisible: Boolean = false,
+    leadingIcon: @Composable (() -> Unit)? = null,
+    trailingIcon: @Composable (() -> Unit)? = null,
     onPasswordToggleClick: (Boolean) -> Unit = {},
     onValueChange: (String) -> Unit
 ){
@@ -255,18 +260,41 @@ fun CBStandardTextField(
         modifier = modifier
             .fillMaxWidth()
     ) {
+
+        if (title != null) {
+            Text(
+                text = title,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 10.dp),
+                fontFamily = Yekanbakh,
+                fontStyle = FontStyle.Normal,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 14.sp,
+                color = BlackColor
+            )
+        }
+
+        Spacer(modifier = Modifier.height(5.dp))
+
         TextField(
-            value = text,
+            modifier = modifier
+                .fillMaxWidth()
+                .height(height)
+                .semantics {
+                    testTag = "Textfield with icon"
+                },
+            value = value,
             onValueChange = {
                 onValueChange(it)
             },
-            shape = RoundedCornerShape(12.dp),
+            shape = RoundedCornerShape(shape),
             maxLines = maxLines,
             textStyle = style,
             placeholder = {
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = hint,
+                    text = placeholder,
                     fontSize = 14.sp,
                     fontFamily = Yekanbakh,
                     fontWeight = FontWeight.Normal,
@@ -291,50 +319,8 @@ fun CBStandardTextField(
                 focusedLabelColor = PrimaryColor,
                 unfocusedLabelColor = DisableColor
             ),
-            leadingIcon = if (leadingIcon != null) {
-                val icon: @Composable () -> Unit = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.icon_sms),
-                        contentDescription = "",
-                        tint = MaterialTheme.colors.onBackground,
-                        modifier = Modifier.size(25.dp)
-                    )
-                }
-                icon
-            } else null,
-            trailingIcon = if(isPasswordToggleDisplayed) {
-                val icon: @Composable () -> Unit = {
-                    IconButton(
-                        onClick = {
-                            onPasswordToggleClick(!isPasswordVisible)
-                        },
-                        modifier = Modifier
-                            .semantics {
-                                testTag = "Password Toggle"
-                            }
-                    ) {
-                        Icon(
-                            imageVector = if (isPasswordVisible) {
-                                Icons.Outlined.Lock
-                            } else {
-                                Icons.Outlined.Lock
-                            },
-                            tint = Color.White,
-                            contentDescription = if (isPasswordVisible) {
-                                "Hide Password"
-                            } else {
-                                "Show Password"
-                            }
-                        )
-                    }
-                }
-                icon
-            } else null,
-            modifier = modifier
-                .fillMaxWidth()
-                .semantics {
-                    testTag = "Textfield with icon"
-                }
+            leadingIcon = leadingIcon,
+            trailingIcon = trailingIcon
         )
         if (error.isNotEmpty()) {
             Text(
@@ -347,4 +333,12 @@ fun CBStandardTextField(
             )
         }
     }
+}
+
+@Composable
+@Preview
+fun CBStandardTextFieldPreview() {
+    CBStandardTextField(
+        onValueChange = {}
+    )
 }

@@ -87,7 +87,7 @@ fun LoginScreen(navController: NavController) {
                     onValueChange = {
                         email = it
                     },
-                    hint = "ایمیل خودتو وارد کن",
+                    placeholder = "ایمیل خودتو وارد کن",
                     maxLength = 100,
                     singleLine = true,
                     maxLines = 1,
@@ -101,7 +101,7 @@ fun LoginScreen(navController: NavController) {
                     onValueChange = {
                         password = it
                     },
-                    hint = "رمز عبورتو وارد کن",
+                    placeholder = "رمز عبورتو وارد کن",
                     maxLength = 40,
                     singleLine = true,
                     maxLines = 1,

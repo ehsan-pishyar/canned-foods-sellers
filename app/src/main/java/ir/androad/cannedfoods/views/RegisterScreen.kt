@@ -59,7 +59,7 @@ fun RegisterScreen(navController: NavController) {
                 Text(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = "منتظرت بودیم",
+                    text = "منتظرت بودیم رفیق",
                     fontFamily = Yekanbakh,
                     fontStyle = FontStyle.Normal,
                     fontWeight = FontWeight.Normal,
@@ -87,7 +87,7 @@ fun RegisterScreen(navController: NavController) {
                     onValueChange = {
                         email = it
                     },
-                    hint = "ایمیل خودتو وارد کن",
+                    placeholder = "ایمیل خودتو وارد کن",
                     maxLength = 100,
                     singleLine = true,
                     maxLines = 1,
@@ -101,7 +101,7 @@ fun RegisterScreen(navController: NavController) {
                     onValueChange = {
                         password = it
                     },
-                    hint = "رمز عبورتو وارد کن",
+                    placeholder = "رمز عبورتو وارد کن",
                     maxLength = 40,
                     singleLine = true,
                     maxLines = 1,
@@ -117,7 +117,7 @@ fun RegisterScreen(navController: NavController) {
                     onValueChange = {
                         confirmPassword = it
                     },
-                    hint = "تکرار رمز عبور",
+                    placeholder = "تکرار رمز عبور",
                     maxLength = 40,
                     singleLine = true,
                     maxLines = 1,
