@@ -1,6 +1,8 @@
 package ir.androad.cannedfoods.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -232,7 +234,7 @@ fun CBFilledTextFieldPreview() {
 @Composable
 fun CBStandardTextField(
     modifier: Modifier = Modifier,
-    title: String? = null,
+    title: String = "",
     height: Dp = 55.dp,
     value: String = "",
     placeholder: String = "",
@@ -248,6 +250,7 @@ fun CBStandardTextField(
     singleLine: Boolean = true,
     maxLines: Int = 1,
     shape: Dp = 12.dp,
+    readOnly: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
     isPasswordVisible: Boolean = false,
@@ -261,7 +264,7 @@ fun CBStandardTextField(
             .fillMaxWidth()
     ) {
 
-        if (title != null) {
+        if (title.isNotEmpty()) {
             Text(
                 text = title,
                 modifier = modifier
@@ -277,20 +280,21 @@ fun CBStandardTextField(
 
         Spacer(modifier = Modifier.height(5.dp))
 
-        TextField(
+        OutlinedTextField(
             modifier = modifier
                 .fillMaxWidth()
                 .height(height)
                 .semantics {
-                    testTag = "Textfield with icon"
+                    testTag = "Text field"
                 },
             value = value,
             onValueChange = {
                 onValueChange(it)
             },
-            shape = RoundedCornerShape(shape),
+            shape = RoundedCornerShape(12.dp),
             maxLines = maxLines,
             textStyle = style,
+            readOnly = readOnly,
             placeholder = {
                 Text(
                     modifier = modifier.fillMaxWidth(),
@@ -314,10 +318,8 @@ fun CBStandardTextField(
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = Color.White,
                 cursorColor = BlackColor,
-                focusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = PrimaryColor,
                 unfocusedIndicatorColor = Color.Transparent,
-                focusedLabelColor = PrimaryColor,
-                unfocusedLabelColor = DisableColor
             ),
             leadingIcon = leadingIcon,
             trailingIcon = trailingIcon
@@ -339,6 +341,7 @@ fun CBStandardTextField(
 @Preview
 fun CBStandardTextFieldPreview() {
     CBStandardTextField(
-        onValueChange = {}
+        onValueChange = {},
+        title = "عنوان"
     )
 }
