@@ -28,6 +28,9 @@ import ir.androad.cannedfoods.ui.theme.*
 @Composable
 fun LoginScreen(navController: NavController) {
 
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,32 +85,30 @@ fun LoginScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                var email by remember { mutableStateOf("") }
                 CBStandardTextField(
-                    onValueChange = {
-                        email = it
-                    },
+                    onValueChange = { email = it },
+                    value = email,
                     placeholder = "ایمیل خودتو وارد کن",
                     maxLength = 100,
                     singleLine = true,
                     maxLines = 1,
-                    keyboardType = KeyboardType.Email
+                    keyboardType = KeyboardType.Email,
+                    title = "ایمیل"
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                var password by remember { mutableStateOf("") }
                 CBStandardTextField(
-                    onValueChange = {
-                        password = it
-                    },
+                    onValueChange = { password = it },
+                    value = password,
                     placeholder = "رمز عبورتو وارد کن",
                     maxLength = 40,
                     singleLine = true,
                     maxLines = 1,
                     keyboardType = KeyboardType.Password,
                     isPasswordToggleDisplayed = true,
-                    isPasswordVisible = false
+                    isPasswordVisible = false,
+                    title = "رمز عبور"
                 )
 
                 TextButton(
@@ -121,7 +122,10 @@ fun LoginScreen(navController: NavController) {
                         fontFamily = Yekanbakh,
                         fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.Normal,
-                        textAlign = TextAlign.End)
+                        textAlign = TextAlign.End,
+                        fontSize = 14.sp,
+                        color = PrimaryColor
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(30.dp))
@@ -190,7 +194,7 @@ fun LoginScreen(navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceAround
+                    horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
                     Button(
@@ -199,7 +203,7 @@ fun LoginScreen(navController: NavController) {
                             .height(50.dp)
                             .border(
                                 width = 2.dp,
-                                color = Color.White,
+                                color = PrimaryColor,
                                 shape = RoundedCornerShape(8.dp)
                             ),
                         onClick = { /*TODO*/ },
@@ -226,7 +230,7 @@ fun LoginScreen(navController: NavController) {
                             .height(50.dp)
                             .border(
                                 width = 2.dp,
-                                color = Color.White,
+                                color = PrimaryColor,
                                 shape = RoundedCornerShape(8.dp)
                             ),
                         onClick = { /*TODO*/ },
@@ -253,7 +257,7 @@ fun LoginScreen(navController: NavController) {
                             .height(50.dp)
                             .border(
                                 width = 2.dp,
-                                color = Color.White,
+                                color = PrimaryColor,
                                 shape = RoundedCornerShape(8.dp)
                             ),
                         onClick = { /*TODO*/ },
@@ -306,7 +310,8 @@ fun LoginScreen(navController: NavController) {
                             fontFamily = Yekanbakh,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Normal,
-                            fontStyle = FontStyle.Normal
+                            fontStyle = FontStyle.Normal,
+                            color = PrimaryColor
                         )
                     }
                 }
