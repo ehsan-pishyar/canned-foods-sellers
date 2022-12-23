@@ -1,31 +1,30 @@
 package ir.androad.cache.daos
 
 import androidx.room.*
-import ir.androad.cache.models.ResultEntity
+import ir.androad.cache.models.responses.ResultDetailsResponseEntity
+import ir.androad.cache.models.responses.ResultResponseEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ResultDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertResult(resultEntity: ResultEntity)
+    suspend fun insertResult(resultEntity: ResultResponseEntity)
 
     @Query("SELECT * FROM `Result_Table`")
-    suspend fun fetchResults(): List<ResultEntity>?
+    fun fetchResults(): Flow<List<ResultResponseEntity>?>
 
     @Query("SELECT * FROM `Result_Table` WHERE id = :resultId")
-    suspend fun fetchResultById(resultId: Long?): ResultEntity
+    fun fetchResultById(resultId: Long?): Flow<ResultResponseEntity>
 
     @Query("SELECT * FROM `Result_Table` WHERE title like :resultTitle")
-    suspend fun fetchResultsByTitle(resultTitle: String?): List<ResultEntity>?
+    fun fetchResultsByTitle(resultTitle: String?): Flow<List<ResultResponseEntity>?>
 
-    @Query("SELECT * FROM `Result_Table` WHERE seller_category_id = :sellerCategoryId")
-    suspend fun fetchResultsBySellerCategoryId(sellerCategoryId: Int?): List<ResultEntity>?
+    @Query("SELECT * FROM `Result_Details_Table` WHERE id = :resultId")
+    fun fetchResultDetails(resultId: Long?): Flow<ResultDetailsResponseEntity>
 
-    @Query("SELECT * FROM `Result_Table` WHERE result_category_id = :resultCategoryId")
-    suspend fun fetchResultsByResultId(resultCategoryId: Int?): List<ResultEntity>
-
-    @Update(entity = ResultEntity::class)
-    suspend fun updateResult(resultEntity: ResultEntity)
+    @Update
+    suspend fun updateResult(resultEntity: ResultResponseEntity)
 
     @Query("DELETE FROM `Result_Table` WHERE id = :resultId")
     suspend fun deleteResultById(resultId: Long?)

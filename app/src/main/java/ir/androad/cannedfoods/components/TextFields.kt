@@ -1,8 +1,5 @@
 package ir.androad.cannedfoods.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.interaction.InteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,9 +10,6 @@ import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -30,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ir.androad.cannedfoods.R
 import ir.androad.cannedfoods.ui.theme.*
 
@@ -245,7 +238,8 @@ fun CBStandardTextField(
         fontSize = 14.sp,
         fontFamily = Yekanbakh,
         fontWeight = FontWeight.Normal,
-        fontStyle = FontStyle.Normal
+        fontStyle = FontStyle.Normal,
+        textAlign = TextAlign.Start
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
@@ -299,10 +293,7 @@ fun CBStandardTextField(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = placeholder,
-                    fontSize = 14.sp,
-                    fontFamily = Yekanbakh,
-                    fontWeight = FontWeight.Normal,
-                    color = LightGrayColor
+                    style = style
                 )
             },
             isError = error != "",

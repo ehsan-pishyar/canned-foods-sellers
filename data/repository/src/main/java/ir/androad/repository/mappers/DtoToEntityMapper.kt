@@ -4,6 +4,7 @@ import ir.androad.cache.models.*
 import ir.androad.cache.models.responses.*
 import ir.androad.network.models.*
 import ir.androad.network.models.responses.*
+import java.util.UUID
 
 fun SellerCategoryDto.toEntity(): SellerCategoryEntity =
     SellerCategoryEntity(
@@ -193,15 +194,17 @@ fun FoodCategoryResponseDto.toEntity(): FoodCategoryResponseEntity =
         this.resultsCategory
     )
 
-fun SellerCommentResponseDto.toEntity(): SellerCommentResponseEntity =
+fun SellerCommentResponseDto.toEntity(id: UUID): SellerCommentResponseEntity =
     SellerCommentResponseEntity(
+        id,
         this.from,
         this.message,
         this.dateCreated
     )
 
-fun ResultCommentResponseDto.toEntity(): ResultCommentResponseEntity =
+fun ResultCommentResponseDto.toEntity(id: UUID): ResultCommentResponseEntity =
     ResultCommentResponseEntity(
+        id,
         this.from,
         this.message,
         this.dateCreated
@@ -281,7 +284,7 @@ fun ResultDetailsResponseDto.toEntity(): ResultDetailsResponseEntity =
         this.seller?.toEntity(),
         this.foodCategory,
         this.rating,
-        this.comments?.map { it?.toEntity() },
+        this.comments?.map { it?.toEntity(id = UUID(8L, 256L)) },
         this.dateCreated
     )
 
@@ -312,7 +315,7 @@ fun SellerDetailsResponseDto.toEntity(): SellerDetailsResponseEntity =
         banner = this.banner,
         location = this.location?.toEntity(),
         results = this.results?.map { it?.toEntity() },
-        comments = this.comments?.map { it?.toEntity() },
+        comments = this.comments?.map { it?.toEntity(id = UUID(8L, 256L)) },
         deliveryFee = this.deliveryFee,
         deliveryDuration = this.deliveryDuration,
         phoneNumber = this.phoneNumber,

@@ -8,6 +8,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.*
 import ir.androad.cannedfoods.ui.theme.BlackColor
 import ir.androad.cannedfoods.ui.theme.Yekanbakh
@@ -37,5 +38,15 @@ fun StandardText(
         textAlign = textAlign,
         maxLines = maxLines,
         overflow = overflow
+    )
+}
+
+@Preview
+@Composable
+fun PreviewStandardText() {
+    StandardText(
+        text = "متن تست",
+        fontSize = 20,
+        textAlign = TextAlign.Center
     )
 }

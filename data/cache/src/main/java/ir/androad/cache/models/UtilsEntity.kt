@@ -1,11 +1,5 @@
 package ir.androad.cache.models
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
-import ir.androad.cache.utils.Constants
-import ir.androad.cache.utils.randomIdGenerator
-
 data class SellerOpenHoursEntity(
     val id: Long?,
     val sellerId: Long?,

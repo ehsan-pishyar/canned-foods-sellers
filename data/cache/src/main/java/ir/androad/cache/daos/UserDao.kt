@@ -2,6 +2,7 @@ package ir.androad.cache.daos
 
 import androidx.room.*
 import ir.androad.cache.models.UserEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
@@ -10,9 +11,9 @@ interface UserDao {
     suspend fun insertUser(userEntity: UserEntity)
 
     @Query("SELECT * FROM `User_Table` WHERE id = :userId")
-    suspend fun fetchUserById(userId: Long?): UserEntity
+    fun fetchUserById(userId: Long?): Flow<UserEntity>
 
-    @Update(entity = UserEntity::class)
+    @Update()
     suspend fun updateUser(userEntity: UserEntity?)
 
     @Query("SELECT COUNT(*) FROM `User_Table`")

@@ -8,7 +8,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.androad.cache.AppDatabase
-import ir.androad.cache.converters.RoomConverters
+import ir.androad.cache.converters.GsonConverters
+import ir.androad.cache.daos.ResultDao
+import ir.androad.cache.daos.SellerDao
 import ir.androad.cache.daos.UserDao
 import ir.androad.cache.utils.Constants
 import javax.inject.Singleton
@@ -19,9 +21,9 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun appDatabaseProvider(@ApplicationContext app: Context, roomConverters: RoomConverters) =
+    fun appDatabaseProvider(@ApplicationContext app: Context, gsonConverters: GsonConverters) =
         Room.databaseBuilder(app, AppDatabase::class.java, Constants.DB_NAME)
-            .addTypeConverter(roomConverters)
+            .addTypeConverter(gsonConverters)
             .fallbackToDestructiveMigration()
             .build()
 
@@ -29,4 +31,14 @@ object DatabaseModule {
     @Singleton
     fun userDaoProvider(database: AppDatabase): UserDao =
         database.userDao()
+
+    @Provides
+    @Singleton
+    fun resultDaoProvider(database: AppDatabase): ResultDao =
+        database.resultDao()
+
+    @Provides
+    @Singleton
+    fun sellerDaoProvider(database: AppDatabase): SellerDao =
+        database.sellerDao()
 }

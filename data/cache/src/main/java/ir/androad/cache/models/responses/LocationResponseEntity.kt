@@ -1,5 +1,7 @@
 package ir.androad.cache.models.responses
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import ir.androad.cache.models.CityEntity
 
 data class StateResponseEntity (
@@ -14,7 +16,9 @@ data class CityResponseEntity (
     val state: String?
 )
 
+@Entity(tableName = "Location_Table")
 data class LocationResponseEntity(
+    @PrimaryKey(autoGenerate = false)
     val id: Long?,
     val title: String?,
     val lat: Double?,
