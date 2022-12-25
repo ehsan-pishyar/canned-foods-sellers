@@ -15,7 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.androad.cannedfoods.components.CBStandardTextField
+import ir.androad.cannedfoods.components.JetTextField
 import ir.androad.cannedfoods.components.StandardDialog
 import ir.androad.cannedfoods.ui.theme.*
 
@@ -67,7 +67,7 @@ fun SellerDetailsScreen() {
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = {
                     title = it
                 },
@@ -81,7 +81,7 @@ fun SellerDetailsScreen() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = {
                     description = it
                 },
@@ -91,7 +91,7 @@ fun SellerDetailsScreen() {
                 singleLine = false,
                 maxLines = 4,
                 keyboardType = KeyboardType.Text,
-                height = 130.dp
+                height = 130
             )
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -161,7 +161,7 @@ fun SellerDetailsScreen() {
                         .weight(1f)
                 ) {
 
-                    CBStandardTextField(
+                    JetTextField(
                         onValueChange = {
                             deliveryFee = it.toLong()
                         },
@@ -181,7 +181,7 @@ fun SellerDetailsScreen() {
                         .weight(1f)
                 ) {
 
-                    CBStandardTextField(
+                    JetTextField(
                         onValueChange = {
                             deliveryDuration = it.toInt()
                         },
@@ -197,7 +197,7 @@ fun SellerDetailsScreen() {
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = {
                     phoneNumber = it
                 },

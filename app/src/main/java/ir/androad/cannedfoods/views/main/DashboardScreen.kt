@@ -9,19 +9,15 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import ir.androad.cannedfoods.R
-import ir.androad.cannedfoods.components.StandardText
+import ir.androad.cannedfoods.components.JetText
 import ir.androad.cannedfoods.ui.theme.*
-import ir.androad.cannedfoods.viewmodels.DashboardViewModel
 
 @Composable
 fun DashboardScreen(
@@ -96,7 +92,7 @@ fun DashboardScreen(
                 }
             }
 
-            StandardText(
+            JetText(
                 modifier = Modifier.offset(y = (-40).dp),
                 text = "عنوان فروشنده",
                 fontSize = 18,
@@ -106,7 +102,7 @@ fun DashboardScreen(
                 overflow = TextOverflow.Ellipsis
             )
 
-            StandardText(
+            JetText(
                 modifier = Modifier.offset(y = (-40).dp),
                 text = "(تهران - میدان ولی عصر)",
                 fontSize = 12,
@@ -147,7 +143,7 @@ fun DashboardScreen(
                                 tint = RedColor
                             )
                             Spacer(modifier = Modifier.height(25.dp))
-                            StandardText(
+                            JetText(
                                 text = "بسته است",
                                 fontSize = 12,
                                 fontWeight = FontWeight.SemiBold
@@ -167,7 +163,7 @@ fun DashboardScreen(
                                 tint = GreenColor
                             )
                             Spacer(modifier = Modifier.height(20.dp))
-                            StandardText(
+                            JetText(
                                 text = "باز است",
                                 fontSize = 12,
                                 fontWeight = FontWeight.SemiBold
@@ -199,7 +195,7 @@ fun DashboardScreen(
                             tint = PrimaryColor
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-                        StandardText(
+                        JetText(
                             text = "10000 ت",
                             fontSize = 12,
                             fontWeight = FontWeight.SemiBold
@@ -229,7 +225,7 @@ fun DashboardScreen(
                             tint = PrimaryColor
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-                        StandardText(
+                        JetText(
                             text = "9 دقیقه",
                             fontSize = 12,
                             fontWeight = FontWeight.SemiBold
@@ -259,7 +255,7 @@ fun DashboardScreen(
                             tint = YellowColor
                         )
                         Spacer(modifier = Modifier.height(10.dp))
-                        StandardText(
+                        JetText(
                             text = "4.5 / 5.0",
                             fontSize = 12,
                             fontWeight = FontWeight.SemiBold
@@ -274,12 +270,12 @@ fun DashboardScreen(
                     .padding(horizontal = 20.dp, vertical = 20.dp),
             ) {
 
-                StandardText(
+                JetText(
                     text = "توضیحات فروشگاه:",
                     fontWeight = FontWeight.SemiBold
                 )
 
-                StandardText(
+                JetText(
                     text = "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است",
                     fontSize = 12,
                     color = LightGrayColor,

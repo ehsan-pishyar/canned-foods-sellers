@@ -2,23 +2,21 @@ package ir.androad.cannedfoods.views.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.androad.cannedfoods.components.CBStandardTextField
-import ir.androad.cannedfoods.R
+import ir.androad.cannedfoods.components.JetTextField
+import ir.androad.cannedfoods.components.JetButton
+import ir.androad.cannedfoods.components.JetText
+import ir.androad.cannedfoods.components.addSocialButtons
 import ir.androad.cannedfoods.ui.theme.*
 
 @Composable
@@ -41,56 +39,50 @@ fun LoginScreen(
                 .fillMaxSize()
                 .align(Alignment.BottomCenter)
                 .padding(30.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "سلام دوباره!",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
+                fontSize = 25,
                 textAlign = TextAlign.Center,
                 color = BlackColor
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "خوش اومـــــدی",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
+                fontSize = 16,
                 textAlign = TextAlign.Center,
                 color = GrayColor
             )
 
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "دلمون برات تنگ شده بود",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
+                fontSize = 16,
                 textAlign = TextAlign.Center,
                 color = GrayColor
             )
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            CBStandardTextField(
-                onValueChange = { email = it },
+            JetTextField(
+                onValueChange = {
+                    email = it
+                },
                 value = email,
                 placeholder = "ایمیل خودتو وارد کن",
-                maxLength = 100,
                 singleLine = true,
                 maxLines = 1,
+                maxLength = 50,
                 keyboardType = KeyboardType.Email,
                 title = "ایمیل",
                 style = TextStyle(
@@ -102,13 +94,13 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = { password = it },
                 value = password,
                 placeholder = "رمز عبورتو وارد کن",
-                maxLength = 40,
                 singleLine = true,
                 maxLines = 1,
+                maxLength = 50,
                 keyboardType = KeyboardType.Password,
                 isPasswordToggleDisplayed = true,
                 isPasswordVisible = false,
@@ -122,45 +114,25 @@ fun LoginScreen(
 
             TextButton(
                 modifier = Modifier.fillMaxWidth(),
-                onClick = { /*TODO*/ }
+                onClick = { toForgotPasswordScreen() }
             ) {
-                Text(
+                JetText(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = "بازیابی رمز عبور",
-                    fontFamily = Yekanbakh,
-                    fontStyle = FontStyle.Normal,
-                    fontWeight = FontWeight.Normal,
+                    text = "رمز عبورتو فراموش کردی؟",
                     textAlign = TextAlign.End,
-                    fontSize = 14.sp,
+                    fontSize = 14,
                     color = PrimaryColor
                 )
             }
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = PrimaryColor),
-                shape = RoundedCornerShape(12.dp),
-                elevation = ButtonDefaults.elevation(
-                    defaultElevation = 0.dp,
-                    pressedElevation = 0.dp,
-                    disabledElevation = 0.dp
-                )
-            ) {
-                Text(
-                    text = "ورود",
-                    fontFamily = Yekanbakh,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    fontStyle = FontStyle.Normal,
-                    color = Color.White
-                )
-            }
+            JetButton(
+                onClick = { toDashboardScreen() },
+                width = 0,
+                text = "ورود",
+            )
 
             Spacer(modifier = Modifier.height(50.dp))
 
@@ -178,13 +150,10 @@ fun LoginScreen(
                     color = LightGrayColor
                 )
 
-                Text(
+                JetText(
                     modifier = Modifier
                         .wrapContentWidth(),
                     text = "یا ورود با شبکه های اجتماعی",
-                    fontFamily = Yekanbakh,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
                     color = GrayColor
                 )
 
@@ -205,75 +174,11 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-
-                Button(
-                    modifier = Modifier
-                        .width(70.dp)
-                        .height(50.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-
-                    Icon(
-                        modifier = Modifier
-                            .width(25.dp)
-                            .height(25.dp),
-                        painter = painterResource(id = R.drawable.icon_google),
-                        contentDescription = ""
-                    )
-                }
-
-                Button(
-                    modifier = Modifier
-                        .width(70.dp)
-                        .height(50.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-
-                    Icon(
-                        modifier = Modifier
-                            .width(25.dp)
-                            .height(25.dp),
-                        painter = painterResource(id = R.drawable.icon_github),
-                        contentDescription = ""
-                    )
-                }
-
-                Button(
-                    modifier = Modifier
-                        .width(70.dp)
-                        .height(50.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-
-                    Icon(
-                        modifier = Modifier
-                            .width(25.dp)
-                            .height(25.dp),
-                        painter = painterResource(id = R.drawable.icon_twitter),
-                        contentDescription = ""
-                    )
-                }
+                addSocialButtons(
+                    toGoogle = {},
+                    toGithub = {},
+                    toTwitter = {}
+                )
             }
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -284,30 +189,22 @@ fun LoginScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
-
-                Text(
+                JetText(
                     modifier = Modifier
                         .wrapContentWidth(),
                     text = "هنوز فروشنده نشدی؟",
-                    fontFamily = Yekanbakh,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
+                    fontSize = 14,
                     color = GrayColor
                 )
 
                 TextButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { toRegisterScreen() },
                 ) {
-
-                    Text(
+                    JetText(
                         modifier = Modifier
                             .wrapContentWidth(),
                         text = "الان ثبت نام کن",
-                        fontFamily = Yekanbakh,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
+                        fontSize = 14,
                         color = PrimaryColor
                     )
                 }

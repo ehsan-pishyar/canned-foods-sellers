@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -14,7 +15,7 @@ import ir.androad.cannedfoods.ui.theme.BlackColor
 import ir.androad.cannedfoods.ui.theme.Yekanbakh
 
 @Composable
-fun StandardText(
+fun JetText(
     modifier: Modifier = Modifier,
     text: String = "",
     fontSize: Int = 14,
@@ -23,15 +24,17 @@ fun StandardText(
     lineHeight: TextUnit = 1.8.em,
     textAlign: TextAlign = TextAlign.Justify,
     maxLines: Int = 1,
-    overflow: TextOverflow = TextOverflow.Visible
+    overflow: TextOverflow = TextOverflow.Visible,
+    fontFamily: FontFamily = Yekanbakh,
+    fontStyle: FontStyle = FontStyle.Normal
 ) {
 
     Text(
         modifier = modifier,
         text = text,
-        fontFamily = Yekanbakh,
+        fontFamily = fontFamily,
         fontWeight = fontWeight,
-        fontStyle = FontStyle.Normal,
+        fontStyle = fontStyle,
         fontSize = (fontSize).sp,
         color = color,
         lineHeight = lineHeight,
@@ -43,8 +46,8 @@ fun StandardText(
 
 @Preview
 @Composable
-fun PreviewStandardText() {
-    StandardText(
+fun PreviewJetText() {
+    JetText(
         text = "متن تست",
         fontSize = 20,
         textAlign = TextAlign.Center

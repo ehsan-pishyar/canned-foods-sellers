@@ -5,11 +5,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -152,86 +152,12 @@ fun CBOutlinedTextField(
 }
 
 @Composable
-@Preview
-fun CBOutlinedTextFieldPreview() {
-    CBOutlinedTextField(
-        leadingIcon = {
-            Icon(painter = painterResource(id = R.drawable.icon_sms), contentDescription = "")
-        },
-        hint = "ایمیل خود را وارد نمائید...",
-        singleLine = true,
-        maxLines = 1,
-        onValueChange = {}
-    )
-}
-
-@Composable
-fun CBFilledTextField() {
-    val maxChar = 5
-    Column {
-        var textState by remember { mutableStateOf("") }
-        val maxLength = 110
-        val lightBlue = Color(0xffd8e6ff)
-        val blue = Color(0xff76a9ff)
-        Text(
-            text = "Caption",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 4.dp),
-            textAlign = TextAlign.Start,
-            color = blue
-        )
-        TextField(
-            modifier = Modifier.fillMaxWidth(),
-            value = textState,
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = lightBlue,
-                cursorColor = Color.Black,
-                disabledLabelColor = lightBlue,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            onValueChange = {
-                if (it.length <= maxLength) textState = it
-            },
-            shape = RoundedCornerShape(8.dp),
-            singleLine = true,
-            trailingIcon = {
-                if (textState.isNotEmpty()) {
-                    IconButton(onClick = { textState = "" }) {
-                        Icon(
-                            imageVector = Icons.Outlined.Close,
-                            contentDescription = null
-                        )
-                    }
-                }
-            }
-        )
-        Text(
-            text = "${textState.length} / $maxLength",
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 4.dp),
-            textAlign = TextAlign.End,
-            color = blue
-        )
-    }
-}
-
-@Composable
-@Preview
-fun CBFilledTextFieldPreview() {
-    CBFilledTextField()
-}
-
-@Composable
-fun CBStandardTextField(
+fun JetTextField(
     modifier: Modifier = Modifier,
     title: String = "",
-    height: Dp = 55.dp,
+    height: Int = 55,
     value: String = "",
-    placeholder: String = "",
-    maxLength: Int? = 100,
+    placeholder: String,
     error: String = "",
     style: TextStyle = TextStyle(
         color = MaterialTheme.colors.onBackground,
@@ -243,7 +169,8 @@ fun CBStandardTextField(
     ),
     singleLine: Boolean = true,
     maxLines: Int = 1,
-    shape: Dp = 12.dp,
+    maxLength: Int = 100,
+    shape: Shape = RoundedCornerShape(12.dp),
     readOnly: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
@@ -259,7 +186,7 @@ fun CBStandardTextField(
     ) {
 
         if (title.isNotEmpty()) {
-            Text(
+            JetText(
                 text = title,
                 modifier = modifier
                     .fillMaxWidth()
@@ -267,7 +194,7 @@ fun CBStandardTextField(
                 fontFamily = Yekanbakh,
                 fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.SemiBold,
-                fontSize = 14.sp,
+                fontSize = 14,
                 color = BlackColor
             )
         }
@@ -277,7 +204,7 @@ fun CBStandardTextField(
         OutlinedTextField(
             modifier = modifier
                 .fillMaxWidth()
-                .height(height)
+                .height(height.dp)
                 .semantics {
                     testTag = "Text field"
                 },
@@ -285,7 +212,7 @@ fun CBStandardTextField(
             onValueChange = {
                 onValueChange(it)
             },
-            shape = RoundedCornerShape(12.dp),
+            shape = shape,
             maxLines = maxLines,
             textStyle = style,
             readOnly = readOnly,
@@ -293,10 +220,17 @@ fun CBStandardTextField(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = placeholder,
-                    style = style
+                    style = style,
+
                 )
             },
-            isError = error != "",
+//            if (onValueChange.toString().length > maxLength) {
+//                isError = error
+//            } else {
+//                isError = ""
+//            }
+//            isError = error != "",
+            isError = onValueChange.toString().length > maxLength,
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType
             ),
@@ -330,9 +264,6 @@ fun CBStandardTextField(
 
 @Composable
 @Preview
-fun CBStandardTextFieldPreview() {
-    CBStandardTextField(
-        onValueChange = {},
-        title = "عنوان"
-    )
+fun PreviewJetTextField() {
+    JetTextField(title = "عنوان", placeholder = "نگهدارنده عنوان", onValueChange = {})
 }

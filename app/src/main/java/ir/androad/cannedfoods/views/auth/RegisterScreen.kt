@@ -2,23 +2,21 @@ package ir.androad.cannedfoods.views.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ir.androad.cannedfoods.R
-import ir.androad.cannedfoods.components.CBStandardTextField
+import ir.androad.cannedfoods.components.JetButton
+import ir.androad.cannedfoods.components.JetText
+import ir.androad.cannedfoods.components.JetTextField
+import ir.androad.cannedfoods.components.addSocialButtons
 import ir.androad.cannedfoods.ui.theme.*
 
 @Composable
@@ -26,6 +24,10 @@ fun RegisterScreen(
     toLoginScreen: () -> Unit,
     toDashboardScreen: () -> Unit
 ) {
+
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
@@ -37,59 +39,50 @@ fun RegisterScreen(
                 .fillMaxSize()
                 .align(Alignment.BottomCenter)
                 .padding(30.dp),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "فروشنده شو!",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,
-                fontSize = 30.sp,
+                fontSize = 25,
                 textAlign = TextAlign.Center,
                 color = BlackColor
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "منتظرت بودیم رفیق",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Normal,
-                fontSize = 18.sp,
+                fontSize = 16,
                 textAlign = TextAlign.Center,
                 color = GrayColor
             )
 
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "همین الان فروشگاهتو ثبت کن",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Normal,
-                fontSize = 18.sp,
+                fontSize = 16,
                 textAlign = TextAlign.Center,
                 color = GrayColor
             )
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            var email by remember { mutableStateOf("") }
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = {
                     email = it
                 },
                 title = "ایمیل",
                 placeholder = "ایمیل خودتو وارد کن",
-                maxLength = 100,
                 singleLine = true,
                 maxLines = 1,
+                maxLength = 50,
                 keyboardType = KeyboardType.Email,
                 style = TextStyle(
                     color = LighterGrayColor,
@@ -100,16 +93,15 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            var password by remember { mutableStateOf("") }
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = {
                     password = it
                 },
                 title = "رمز عبور",
                 placeholder = "رمز عبورتو وارد کن",
-                maxLength = 40,
                 singleLine = true,
                 maxLines = 1,
+                maxLength = 50,
                 keyboardType = KeyboardType.Password,
                 isPasswordToggleDisplayed = true,
                 isPasswordVisible = true,
@@ -122,16 +114,15 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            var confirmPassword by remember { mutableStateOf("") }
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = {
                     confirmPassword = it
                 },
                 title = "تکرار رمز عبور",
                 placeholder = "تکرار رمز عبور",
-                maxLength = 40,
                 singleLine = true,
                 maxLines = 1,
+                maxLength = 50,
                 keyboardType = KeyboardType.Password,
                 isPasswordToggleDisplayed = true,
                 isPasswordVisible = true,
@@ -144,28 +135,11 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(50.dp))
 
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = PrimaryColor),
-                shape = RoundedCornerShape(12.dp),
-                elevation = ButtonDefaults.elevation(
-                    defaultElevation = 0.dp,
-                    pressedElevation = 0.dp,
-                    disabledElevation = 0.dp
-                )
-            ) {
-                Text(
-                    text = "ثبت نام",
-                    fontFamily = Yekanbakh,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    fontStyle = FontStyle.Normal,
-                    color = Color.White
-                )
-            }
+            JetButton(
+                onClick = { toDashboardScreen() },
+                width = 0,
+                text = "ثبت نام",
+            )
 
             Spacer(modifier = Modifier.height(50.dp))
 
@@ -183,13 +157,10 @@ fun RegisterScreen(
                     color = LightGrayColor
                 )
 
-                Text(
+                JetText(
                     modifier = Modifier
                         .wrapContentWidth(),
                     text = "یا ثبت نام با شبکه های اجتماعی",
-                    fontFamily = Yekanbakh,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
                     color = GrayColor
                 )
 
@@ -210,75 +181,11 @@ fun RegisterScreen(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-
-                Button(
-                    modifier = Modifier
-                        .width(70.dp)
-                        .height(50.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-
-                    Icon(
-                        modifier = Modifier
-                            .width(25.dp)
-                            .height(25.dp),
-                        painter = painterResource(id = R.drawable.icon_google),
-                        contentDescription = ""
-                    )
-                }
-
-                Button(
-                    modifier = Modifier
-                        .width(70.dp)
-                        .height(50.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-
-                    Icon(
-                        modifier = Modifier
-                            .width(25.dp)
-                            .height(25.dp),
-                        painter = painterResource(id = R.drawable.icon_github),
-                        contentDescription = ""
-                    )
-                }
-
-                Button(
-                    modifier = Modifier
-                        .width(70.dp)
-                        .height(50.dp),
-                    onClick = { /*TODO*/ },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
-                    shape = RoundedCornerShape(8.dp),
-                    elevation = ButtonDefaults.elevation(
-                        defaultElevation = 0.dp,
-                        pressedElevation = 0.dp,
-                        disabledElevation = 0.dp
-                    )
-                ) {
-
-                    Icon(
-                        modifier = Modifier
-                            .width(25.dp)
-                            .height(25.dp),
-                        painter = painterResource(id = R.drawable.icon_twitter),
-                        contentDescription = ""
-                    )
-                }
+                addSocialButtons(
+                    toGoogle = {},
+                    toGithub = {},
+                    toTwitter = {}
+                )
             }
 
             Spacer(modifier = Modifier.height(50.dp))
@@ -290,29 +197,22 @@ fun RegisterScreen(
                 horizontalArrangement = Arrangement.Center
             ) {
 
-                Text(
+                JetText(
                     modifier = Modifier
                         .wrapContentWidth(),
                     text = "فروشنده ای؟",
-                    fontFamily = Yekanbakh,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
-                    fontStyle = FontStyle.Normal,
+                    fontSize = 14,
                     color = GrayColor
                 )
 
                 TextButton(
-                    onClick = { /*TODO*/ },
+                    onClick = { toLoginScreen() },
                 ) {
-
-                    Text(
+                    JetText(
                         modifier = Modifier
                             .wrapContentWidth(),
                         text = "صفحه ورود",
-                        fontFamily = Yekanbakh,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Normal,
-                        fontStyle = FontStyle.Normal,
+                        fontSize = 14,
                         color = PrimaryColor
                     )
                 }

@@ -4,28 +4,20 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Card
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ir.androad.cannedfoods.ui.theme.*
 import ir.androad.cannedfoods.R
+import ir.androad.cannedfoods.components.JetButton
+import ir.androad.cannedfoods.components.JetText
 
 @Composable
 fun OnBoardingScreen(
@@ -39,7 +31,7 @@ fun OnBoardingScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp),
+                .padding(15.dp),
             verticalArrangement = Arrangement.Bottom,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -52,77 +44,56 @@ fun OnBoardingScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight(),
-                shape = RoundedCornerShape(40.dp)
+                shape = RoundedCornerShape(15.dp)
             ) {
 
                 Column(
                     modifier = Modifier
-                        .padding(30.dp),
+                        .padding(20.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
 
-                    Text(
+                    JetText(
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = "کند فود",
-                        fontFamily = Yekanbakh,
                         fontStyle = FontStyle.Italic,
                         fontWeight = FontWeight.Medium,
-                        fontSize = 25.sp,
+                        fontSize = 25,
                         textAlign = TextAlign.Center,
                         color = PrimaryColor
                     )
 
-                    Text(
+                    JetText(
                         modifier = Modifier
                             .fillMaxWidth(),
                         text = "فروشندگان",
-                        fontFamily = Yekanbakh,
-                        fontStyle = FontStyle.Normal,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 30.sp,
+                        fontSize = 30,
                         textAlign = TextAlign.Center,
                         color = BlackColor
                     )
 
                     Spacer(modifier = Modifier.height(10.dp))
 
-                    Text(
+                    JetText(
                         modifier = Modifier
                             .fillMaxWidth(),
-                        text = "می خوای فروشنده توی کند فود باشی، فروشگاه خودتو ثبت کنی و درآمد داشته باشی؟ پس از اینجا شروع کن. فروشگاه، رستوران یا کافه خودتو ثبت کن.",
-                        fontFamily = Yekanbakh,
-                        fontStyle = FontStyle.Normal,
+                        text = "می خوای فروشنده توی جت فود باشی، فروشگاه خودتو ثبت کنی و درآمد داشته باشی؟ پس از اینجا شروع کن. فروشگاه، رستوران یا کافه خودتو ثبت کن.",
                         fontWeight = FontWeight.Normal,
-                        fontSize = 16.sp,
+                        fontSize = 16,
                         textAlign = TextAlign.Center,
-                        color = LightGrayColor
+                        color = LightGrayColor,
+                        maxLines = 5
                     )
 
                     Spacer(modifier = Modifier.height(50.dp))
 
-                    Button(
+                    JetButton(
                         onClick = { toLoginScreen() },
-                        modifier = Modifier
-                            .width(200.dp)
-                            .height(50.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = PrimaryColor),
-                        shape = RoundedCornerShape(12.dp),
-                        elevation = ButtonDefaults.elevation(
-                            defaultElevation = 0.dp,
-                            pressedElevation = 0.dp,
-                            disabledElevation = 0.dp
-                        )
-                    ) {
-                        Text(
-                            text = "شروع کنیم",
-                            fontFamily = Yekanbakh,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Medium,
-                            fontStyle = FontStyle.Normal,
-                            color = Color.White
-                        )
-                    }
+                        width = 200,
+                        text = "شروع کنیم",
+                    )
                 }
             }
         }

@@ -2,27 +2,19 @@ package ir.androad.cannedfoods.views.auth
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import ir.androad.cannedfoods.components.CBStandardTextField
+import ir.androad.cannedfoods.components.JetButton
+import ir.androad.cannedfoods.components.JetText
+import ir.androad.cannedfoods.components.JetTextField
 import ir.androad.cannedfoods.ui.theme.*
-import ir.androad.cannedfoods.viewmodels.ForgotPasswordViewModel
 
 @Composable
 fun ForgotPasswordScreen(
@@ -45,41 +37,36 @@ fun ForgotPasswordScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "رمزتو گم کردی؟",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
                 fontWeight = FontWeight.Bold,
-                fontSize = 25.sp,
+                fontSize = 25,
                 textAlign = TextAlign.Center,
                 color = BlackColor
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
+            JetText(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = "ایمیل یا شماره خودتو وارد کن و رمز یه بار مصرفی که برات میفرستیم رو بعد دریافتش توی صفحه بعدی بزن.",
-                fontFamily = Yekanbakh,
-                fontStyle = FontStyle.Normal,
-                fontWeight = FontWeight.Normal,
-                fontSize = 16.sp,
+                fontSize = 16,
                 textAlign = TextAlign.Center,
                 color = GrayColor
             )
 
             Spacer(modifier = Modifier.height(70.dp))
 
-            CBStandardTextField(
+            JetTextField(
                 onValueChange = { email = it },
                 value = email,
                 placeholder = "ایمیل خودتو وارد کن",
-                maxLength = 100,
                 singleLine = true,
                 maxLines = 1,
+                maxLength = 50,
                 keyboardType = KeyboardType.Email,
                 title = "ایمیل",
                 style = TextStyle(
@@ -90,28 +77,13 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            Button(
-                onClick = { /*TODO*/ },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = PrimaryColor),
-                shape = RoundedCornerShape(12.dp),
-                elevation = ButtonDefaults.elevation(
-                    defaultElevation = 0.dp,
-                    pressedElevation = 0.dp,
-                    disabledElevation = 0.dp
-                )
-            ) {
-                Text(
-                    text = "دریافت رمز",
-                    fontFamily = Yekanbakh,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium,
-                    fontStyle = FontStyle.Normal,
-                    color = Color.White
-                )
-            }
+            JetButton(
+                onClick = { toRecoveryPasswordScreen() },
+                width = 0,
+                text = "دریافت رمز",
+            )
+
+            // TODO: Add Return to Login
         }
     }
 }

@@ -16,9 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import ir.androad.cannedfoods.R
-import ir.androad.cannedfoods.components.StandardText
+import ir.androad.cannedfoods.components.JetText
 import ir.androad.cannedfoods.ui.theme.*
 
 @Composable
@@ -39,7 +38,7 @@ fun OrdersScreen() {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                StandardText(
+                JetText(
                     text = "سفارشات مشتری",
                     textAlign = TextAlign.Center,
                     fontSize = 25,
@@ -48,7 +47,7 @@ fun OrdersScreen() {
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                StandardText(
+                JetText(
                     text = "آخرین سفارشات مشتری خودتونو اینجا ببینین. همچنین سفارشات اخیرتون رو هم همینطور.",
                     textAlign = TextAlign.Center,
                     fontSize = 16,
@@ -65,7 +64,7 @@ fun OrdersScreen() {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                StandardText(
+                JetText(
                     text = "سفارشات اخیر",
                     textAlign = TextAlign.Start,
                     fontSize = 17,
@@ -84,14 +83,14 @@ fun OrdersScreen() {
                             .padding(20.dp)
                             .background(Color.White)
                     ) {
-                        StandardText(
+                        JetText(
                             text = "احسان پیش یار",
                             textAlign = TextAlign.Center,
                             fontSize = 16,
                             fontWeight = FontWeight.SemiBold,
                             modifier = Modifier.fillMaxWidth()
                         )
-                        StandardText(
+                        JetText(
                             text = "خیابان قزوین، دوراهی قپان، پلاک 29، واحد 7",
                             textAlign = TextAlign.Center,
                             fontSize = 14,
@@ -102,7 +101,7 @@ fun OrdersScreen() {
                         )
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        StandardText(
+                        JetText(
                             text = "سفارشات",
                             textAlign = TextAlign.Center,
                             fontSize = 16,
@@ -124,7 +123,7 @@ fun OrdersScreen() {
                                     tint = PrimaryColor
                                 )
                                 Spacer(modifier = Modifier.height(10.dp))
-                                StandardText(
+                                JetText(
                                     text = "همبرگر با پنیر گودا",
                                     fontSize = 12,
                                     fontWeight = FontWeight.SemiBold,
@@ -143,7 +142,7 @@ fun OrdersScreen() {
                                     tint = PrimaryColor
                                 )
                                 Spacer(modifier = Modifier.height(10.dp))
-                                StandardText(
+                                JetText(
                                     text = "9 دقیقه",
                                     fontSize = 12,
                                     fontWeight = FontWeight.SemiBold
@@ -152,7 +151,7 @@ fun OrdersScreen() {
                         }
                         Spacer(modifier = Modifier.height(20.dp))
                         Row(modifier = Modifier.fillMaxWidth()) {
-                            StandardText(
+                            JetText(
                                 text = "قیمت:",
                                 fontSize = 16,
                                 fontWeight = FontWeight.SemiBold,
@@ -161,7 +160,7 @@ fun OrdersScreen() {
                                     .fillMaxWidth()
                                     .weight(1f),
                             )
-                            StandardText(
+                            JetText(
                                 text = "12000 تومان",
                                 fontSize = 16,
                                 fontWeight = FontWeight.Normal,
@@ -173,7 +172,7 @@ fun OrdersScreen() {
                         }
                         Spacer(modifier = Modifier.height(10.dp))
                         Row(modifier = Modifier.fillMaxWidth()) {
-                            StandardText(
+                            JetText(
                                 text = "تاریخ و زمان:",
                                 fontSize = 16,
                                 fontWeight = FontWeight.SemiBold,
@@ -182,7 +181,7 @@ fun OrdersScreen() {
                                     .fillMaxWidth()
                                     .weight(1f),
                             )
-                            StandardText(
+                            JetText(
                                 text = "امروز، ساعت: 15:30",
                                 fontSize = 16,
                                 fontWeight = FontWeight.Normal,
@@ -254,7 +253,7 @@ fun OrdersScreen() {
 
                 Spacer(modifier = Modifier.height(30.dp))
 
-                StandardText(
+                JetText(
                     text = "تاریخچه سفارشات",
                     textAlign = TextAlign.Start,
                     fontSize = 17,
@@ -274,7 +273,7 @@ fun OrdersScreen() {
                             .background(Color.White)
                     ) {
                         Row(modifier = Modifier.fillMaxWidth()) {
-                            StandardText(
+                            JetText(
                                 text = "محمد محمدی",
                                 fontSize = 16,
                                 fontWeight = FontWeight.SemiBold,
@@ -283,7 +282,7 @@ fun OrdersScreen() {
                                     .fillMaxWidth()
                                     .weight(1f),
                             )
-                            StandardText(
+                            JetText(
                                 text = "انجام شده",
                                 fontSize = 14,
                                 fontWeight = FontWeight.Normal,
@@ -302,7 +301,7 @@ fun OrdersScreen() {
                         Spacer(modifier = Modifier.height(10.dp))
 
                         Row(modifier = Modifier.fillMaxWidth()) {
-                            StandardText(
+                            JetText(
                                 text = "محید صالحی",
                                 fontSize = 16,
                                 fontWeight = FontWeight.SemiBold,
@@ -311,7 +310,7 @@ fun OrdersScreen() {
                                     .fillMaxWidth()
                                     .weight(1f),
                             )
-                            StandardText(
+                            JetText(
                                 text = "انجام شده",
                                 fontSize = 14,
                                 fontWeight = FontWeight.Normal,

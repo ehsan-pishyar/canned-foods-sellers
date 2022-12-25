@@ -93,14 +93,14 @@ fun StandardProductItem(
                             contentScale = ContentScale.Fit
                         )
 
-                        StandardText(
+                        JetText(
                             modifier = Modifier.padding(PaddingValues(top = 10.dp)),
                             text = "پیتزا پپرونی با قارچ",
                             fontSize = 14,
                             fontWeight = FontWeight.Bold
                         )
 
-                        StandardText(
+                        JetText(
                             modifier = Modifier.padding(PaddingValues(top = 5.dp)),
                             text = "(فست فود امیر)",
                             fontSize = 11,
@@ -110,7 +110,7 @@ fun StandardProductItem(
 
                         Row(modifier = Modifier.padding(PaddingValues(top = 10.dp))) {
                             Column(modifier = Modifier.weight(1f), horizontalAlignment = Alignment.Start) {
-                                StandardText(
+                                JetText(
                                     text = "120000 ت",
                                     color = PrimaryColor,
                                     fontWeight = FontWeight.SemiBold,
