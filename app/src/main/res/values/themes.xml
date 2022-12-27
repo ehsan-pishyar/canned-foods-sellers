@@ -7,9 +7,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.App.Start" parent="Theme.SplashScreen">
+    <style name="Theme.JetSplashScreenTheme" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#FFFFFF</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo</item>
+        <item name="windowSplashScreenAnimationDuration">3000</item>
         <item name="postSplashScreenTheme">@style/Theme.CannedFoods</item>
     </style>
 </resources>

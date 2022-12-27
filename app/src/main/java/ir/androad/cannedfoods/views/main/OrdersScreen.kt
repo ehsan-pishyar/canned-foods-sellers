@@ -275,7 +275,6 @@ fun OrdersScreen() {
                         Row(modifier = Modifier.fillMaxWidth()) {
                             JetText(
                                 text = "محمد محمدی",
-                                fontSize = 16,
                                 fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Start,
                                 modifier = Modifier
@@ -303,7 +302,6 @@ fun OrdersScreen() {
                         Row(modifier = Modifier.fillMaxWidth()) {
                             JetText(
                                 text = "محید صالحی",
-                                fontSize = 16,
                                 fontWeight = FontWeight.SemiBold,
                                 textAlign = TextAlign.Start,
                                 modifier = Modifier

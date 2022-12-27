@@ -28,7 +28,6 @@ fun DashboardScreen(
     var rating: Float by remember { mutableStateOf(4.5f) }
     val isOpen by remember { mutableStateOf(false) }
     val tabState by remember { mutableStateOf(0) }
-    val tabTitles = listOf("توضیحات فروشنده", "محصولات فروشنده")
 
     Box(
         modifier = Modifier

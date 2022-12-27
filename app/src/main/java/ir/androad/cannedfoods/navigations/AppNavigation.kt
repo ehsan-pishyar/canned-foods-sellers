@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import ir.androad.cannedfoods.viewmodels.SplashScreenViewModel
 import ir.androad.cannedfoods.views.auth.ForgotPasswordScreen
 import ir.androad.cannedfoods.views.auth.LoginScreen
 import ir.androad.cannedfoods.views.auth.PasswordRecoveryScreen
@@ -18,13 +19,14 @@ import ir.androad.cannedfoods.views.start.OnBoardingScreen
 
 @Composable
 fun AppNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    startDestination: String
     ) {
 
     NavHost(
         route = Graph.ROOT,
         navController = navController,
-        startDestination = Graph.START //Screen.Dashboard.route
+        startDestination = startDestination //Screen.Dashboard.route
     ) {
         addStartTopLevel(navController = navController)
         addAuthTopLevel(navController = navController)
@@ -34,7 +36,7 @@ fun AppNavigation(
 }
 
 fun NavGraphBuilder.addStartTopLevel(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     navigation(
         route = Graph.START,
@@ -51,10 +53,6 @@ fun NavGraphBuilder.addAuthTopLevel(
         route = Graph.AUTH,
         startDestination = AuthScreens.Login.route
     ) {
-        addLogin(
-            navController = navController,
-
-            )
         addLogin(navController = navController)
         addRegister(navController = navController)
         addForgotPassword(navController = navController)
@@ -76,46 +74,23 @@ fun NavGraphBuilder.addMainTopLevel(
     }
 }
 
-private fun NavGraphBuilder.addDashboard(
+private fun NavGraphBuilder.addOnBoarding(
     navController: NavHostController
 ) {
-    composable(route = JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard)) {
-        DashboardScreen(
-            toRegisterScreen = {
-                navController.navigate(route = JetAuthScreens.Register.createRoute(AuthScreens.Register))
+    composable(route = StartScreens.OnBoarding.route) {
+        OnBoardingScreen(
+            toLoginScreen = {
+                navController.popBackStack()
+                navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login))
             }
         )
     }
 }
 
-private fun NavGraphBuilder.addFoods(
-    navController: NavHostController
-) {
-    composable(route = JetMainScreens.Foods.createRoute(MainScreens.Foods)) {
-        FoodsScreen()
-    }
-}
-
-private fun NavGraphBuilder.addOrders(
-    navController: NavHostController
-) {
-    composable(route = JetMainScreens.Orders.createRoute(MainScreens.Orders)) {
-        OrdersScreen()
-    }
-}
-
-private fun NavGraphBuilder.addIncomes(
-    navController: NavHostController
-) {
-    composable(route = JetMainScreens.Income.createRoute(MainScreens.Income)) {
-        IncomesScreen()
-    }
-}
-
 private fun NavGraphBuilder.addLogin(
     navController: NavHostController
-    ) {
-    composable(route = JetAuthScreens.Login.createRoute(AuthScreens.Login)) {
+) {
+    composable(route = AuthScreens.Login.route) {
         LoginScreen(
             toRegisterScreen = {
                 navController.navigate(
@@ -145,7 +120,7 @@ private fun NavGraphBuilder.addLogin(
 private fun NavGraphBuilder.addRegister(
     navController: NavHostController
 ) {
-    composable(route = JetAuthScreens.Register.createRoute(AuthScreens.Register)) {
+    composable(route = AuthScreens.Register.route) {
         RegisterScreen(
             toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) },
             toDashboardScreen = { navController.navigate(JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard)) }
@@ -156,7 +131,7 @@ private fun NavGraphBuilder.addRegister(
 private fun NavGraphBuilder.addForgotPassword(
     navController: NavHostController
 ) {
-    composable(route = JetAuthScreens.ForgotPassword.createRoute(AuthScreens.ForgotPassword)) {
+    composable(route = AuthScreens.ForgotPassword.route) {
         ForgotPasswordScreen(
             toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) },
             toRecoveryPasswordScreen = {navController.navigate(JetAuthScreens.PasswordRecovery.createRoute(AuthScreens.PasswordRecovery))}
@@ -167,7 +142,7 @@ private fun NavGraphBuilder.addForgotPassword(
 private fun NavGraphBuilder.addPasswordRecovery(
     navController: NavHostController
 ) {
-    composable(route = JetAuthScreens.PasswordRecovery.createRoute(AuthScreens.PasswordRecovery)) {
+    composable(route = AuthScreens.PasswordRecovery.route) {
         PasswordRecoveryScreen(
             toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) },
             toDashboardScreen = { navController.navigate(JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard)) }
@@ -175,13 +150,39 @@ private fun NavGraphBuilder.addPasswordRecovery(
     }
 }
 
-private fun NavGraphBuilder.addOnBoarding(
+private fun NavGraphBuilder.addDashboard(
     navController: NavHostController
 ) {
-    composable(route = StartScreens.OnBoarding.route) {
-        OnBoardingScreen(
-            toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) }
+    composable(route = MainScreens.Dashboard.route) {
+        DashboardScreen(
+            toRegisterScreen = {
+                navController.navigate(route = JetAuthScreens.Register.createRoute(AuthScreens.Register))
+            }
         )
+    }
+}
+
+private fun NavGraphBuilder.addFoods(
+    navController: NavHostController
+) {
+    composable(route = MainScreens.Foods.route) {
+        FoodsScreen()
+    }
+}
+
+private fun NavGraphBuilder.addOrders(
+    navController: NavHostController
+) {
+    composable(route = MainScreens.Orders.route) {
+        OrdersScreen()
+    }
+}
+
+private fun NavGraphBuilder.addIncomes(
+    navController: NavHostController
+) {
+    composable(route = MainScreens.Income.route) {
+        IncomesScreen()
     }
 }
 
