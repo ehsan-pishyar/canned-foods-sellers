@@ -6,21 +6,34 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import ir.androad.domain.repositories.OnBoardingDataStore
+import ir.androad.domain.data_store.OnBoardingDataStore
+import ir.androad.domain.data_store.UserDataStore
 import ir.androad.repository.data_store.OnBoardingDataStoreDataSource
+import ir.androad.repository.data_store.UserDataStoreDataSource
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 object DataStoreModule {
 
+    // OnBoarding DataStore
     @Provides
     fun provideOnBoardingDataStoreDataSource(
         @ApplicationContext context: Context
     ): OnBoardingDataStoreDataSource = OnBoardingDataStoreDataSource(context)
 
     @Provides
-    fun providesOnBoardingRepository(
+    fun providesOnBoardingDataStore(
         onBoardingDataStoreDataSource: OnBoardingDataStoreDataSource
     ): OnBoardingDataStore = onBoardingDataStoreDataSource
+
+    // User DataStore
+    @Provides
+    fun providersUserDataStoreDataSource(
+        @ApplicationContext context: Context
+    ): UserDataStoreDataSource = UserDataStoreDataSource(context)
+
+    @Provides
+    fun providesUserDataStore(
+        userDataStoreDataSource: UserDataStoreDataSource
+    ): UserDataStore = userDataStoreDataSource
 }

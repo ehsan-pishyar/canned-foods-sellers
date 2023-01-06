@@ -6,15 +6,14 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import ir.androad.domain.repositories.OnBoardingDataStore
+import ir.androad.domain.data_store.OnBoardingDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "on_boarding_prefs")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "jet_prefs")
 
 class OnBoardingDataStoreDataSource @Inject constructor(
     context: Context

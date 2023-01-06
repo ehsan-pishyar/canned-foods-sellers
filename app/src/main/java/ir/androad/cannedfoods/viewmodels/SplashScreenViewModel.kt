@@ -6,11 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import ir.androad.cannedfoods.navigations.AuthScreens
 import ir.androad.cannedfoods.navigations.Graph
-import ir.androad.cannedfoods.navigations.JetAuthScreens
-import ir.androad.cannedfoods.navigations.StartScreens
-import ir.androad.domain.repositories.OnBoardingDataStore
+import ir.androad.domain.data_store.OnBoardingDataStore
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

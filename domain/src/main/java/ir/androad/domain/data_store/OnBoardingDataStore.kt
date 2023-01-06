@@ -1,4 +1,4 @@
-package ir.androad.domain.repositories
+package ir.androad.domain.data_store
 
 import kotlinx.coroutines.flow.Flow
 
