@@ -134,11 +134,11 @@ fun SellerEntity.toDomain(): Seller =
 
 fun UserEntity.toDomain(): User =
     User(
-        this.id,
-        this.email,
-        this.password,
-        this.userType,
-        this.dateCreated
+        this.id!!,
+        this.email!!,
+        this.password!!,
+        this.userType!!,
+        this.dateCreated!!
     )
 
 fun SellerOpenHoursEntity.toDomain(): SellerOpenHours =

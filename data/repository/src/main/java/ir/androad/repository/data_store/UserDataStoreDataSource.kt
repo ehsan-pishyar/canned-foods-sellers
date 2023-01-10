@@ -28,16 +28,16 @@ class UserDataStoreDataSource @Inject constructor(
         }
     }
 
-    override fun readUserState(email: String, password: String): Flow<Boolean> {
+    override fun readUserState(): Flow<Boolean> {
+        var isLoggedIn = false
         return dataStore.data
             .map { preferences ->
                 val userEmailState = preferences[UserKeys.userEmailKey]
                 val userPasswordState = preferences[UserKeys.userPasswordKey]
-
-                userEmailState!!.isNotEmpty() &&
-                userEmailState == email &&
-                userPasswordState!!.isNotEmpty() &&
-                userPasswordState == password
+                if (userEmailState!!.trim().isNotEmpty() && userPasswordState!!.trim().isNotEmpty()) {
+                    isLoggedIn = true
+                }
+                isLoggedIn
             }
             .catch {
                 if (it is IOException) {

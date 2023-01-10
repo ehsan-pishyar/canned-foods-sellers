@@ -8,12 +8,14 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androad.cannedfoods.navigations.Graph
 import ir.androad.domain.data_store.OnBoardingDataStore
+import ir.androad.domain.data_store.UserDataStore
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashScreenViewModel @Inject constructor(
-    private val onBoardingDataStoreRepository: OnBoardingDataStore
+    private val onBoardingDataStoreRepository: OnBoardingDataStore,
+    private val userDataStore: UserDataStore
 ): ViewModel() {
 
     private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
@@ -21,6 +23,9 @@ class SplashScreenViewModel @Inject constructor(
 
     private val _startDestination: MutableState<String> = mutableStateOf(Graph.START)
     val startDestination: State<String> = _startDestination
+
+    private val _isUserLoggedIn: MutableState<Boolean> = mutableStateOf(false)
+    val isUserLoggedIn: State<Boolean> = _isUserLoggedIn
 
     init {
         readOnBoardingState()
@@ -36,12 +41,25 @@ class SplashScreenViewModel @Inject constructor(
         viewModelScope.launch {
             onBoardingDataStoreRepository.readOnBoardingState().collect { completed ->
                 if (completed) {
-                    _startDestination.value = Graph.AUTH
+                    checkIfUserLoggedIn()
                 } else {
                     _startDestination.value = Graph.START
                 }
             }
             _isLoading.value = false
+        }
+    }
+
+    private fun checkIfUserLoggedIn() {
+        viewModelScope.launch {
+            userDataStore.readUserState().collect { loggedIn ->
+                _isUserLoggedIn.value = loggedIn
+                if (loggedIn) {
+                    _startDestination.value = Graph.MAIN
+                } else {
+                    _startDestination.value = Graph.AUTH
+                }
+            }
         }
     }
 }
