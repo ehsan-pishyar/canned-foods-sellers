@@ -47,4 +47,32 @@ class UserDataStoreDataSource @Inject constructor(
                 }
             }
     }
+
+    override suspend fun readUserEmail(): String {
+        return dataStore.data
+            .map { preferences ->
+                val email = preferences[UserKeys.userEmailKey]
+                email
+            }.catch {
+                if (it is IOException) {
+                    emit("")
+                } else {
+                    throw it
+                }
+            }.toString()
+    }
+
+    override suspend fun readUserPassword(): String {
+        return dataStore.data
+            .map { preferences ->
+                val password = preferences[UserKeys.userPasswordKey]
+                password
+            }.catch {
+                if (it is IOException) {
+                    emit("")
+                } else {
+                    throw it
+                }
+            }.toString()
+    }
 }

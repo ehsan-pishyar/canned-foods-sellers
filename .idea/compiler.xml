@@ -2,10 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
-      <module name="Canned_Foods.app" target="18" />
-      <module name="Canned_Foods.data.cache" target="18" />
-      <module name="Canned_Foods.data.network" target="18" />
-      <module name="Canned_Foods.data.repository" target="18" />
+      <module name="Canned_Foods.app" target="11" />
+      <module name="Canned_Foods.data.cache" target="11" />
+      <module name="Canned_Foods.data.network" target="11" />
+      <module name="Canned_Foods.data.repository" target="11" />
       <module name="Canned_Foods.features.login" target="18" />
       <module name="Canned_Foods.features.splash" target="18" />
       <module name="Canned_Foods.features.welcome" target="18" />

@@ -9,13 +9,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androad.cannedfoods.navigations.Graph
 import ir.androad.domain.data_store.OnBoardingDataStore
 import ir.androad.domain.data_store.UserDataStore
+import ir.androad.domain.use_cases.user.GetUserByEmailAndPasswordUseCase
+import ir.androad.domain.utils.ServiceResult
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashScreenViewModel @Inject constructor(
     private val onBoardingDataStoreRepository: OnBoardingDataStore,
-    private val userDataStore: UserDataStore
+    private val userDataStore: UserDataStore,
+    private val getUserByEmailAndPasswordUseCase: GetUserByEmailAndPasswordUseCase
 ): ViewModel() {
 
     private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
@@ -52,12 +55,26 @@ class SplashScreenViewModel @Inject constructor(
 
     private fun checkIfUserLoggedIn() {
         viewModelScope.launch {
-            userDataStore.readUserState().collect { loggedIn ->
-                _isUserLoggedIn.value = loggedIn
-                if (loggedIn) {
-                    _startDestination.value = Graph.MAIN
-                } else {
-                    _startDestination.value = Graph.AUTH
+//            userDataStore.readUserState().collect { loggedIn ->
+//                _isUserLoggedIn.value = loggedIn
+//                if (loggedIn) {
+//                    _startDestination.value = Graph.MAIN
+//                } else {
+//                    _startDestination.value = Graph.AUTH
+//                }
+//            }
+            val email = userDataStore.readUserEmail()
+            val password = userDataStore.readUserPassword()
+            getUserByEmailAndPasswordUseCase.invoke(email, password).let {
+                when(it) {
+                    is ServiceResult.Success -> {
+                        _isUserLoggedIn.value = true
+                        _startDestination.value = Graph.MAIN
+                    }
+                    else -> {
+                        _isUserLoggedIn.value = false
+                        _startDestination.value = Graph.AUTH
+                    }
                 }
             }
         }

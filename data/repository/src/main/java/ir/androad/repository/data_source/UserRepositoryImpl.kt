@@ -87,6 +87,25 @@ class UserRepositoryImpl @Inject constructor(
         }
     }.flowOn(IO)
 
+    override suspend fun getUserByEmailAndPassword(
+        email: String?,
+        password: String?
+    ): ServiceResult<Boolean> {
+        val remoteUser = try {
+            apiService.getUserByEmailAndPassword(email, password)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return ServiceResult.Error(data = false, message = e.message)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return ServiceResult.Error(data = false, message = e.message)
+        }
+
+        remoteUser.let {
+            return ServiceResult.Success(data = true)
+        }
+    }
+
     override suspend fun updateUser(user: User): ServiceResult<Boolean> {
         val userEntity = user.toEntity()
         val userDto = userEntity.toDto()
