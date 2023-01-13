@@ -48,8 +48,9 @@ class SellerDaoTest {
             deliveryDuration = 20
         )
 
-        val sellerResponseEntity = sellerDao.insertSeller(seller)
+        sellerDao.insertSeller(seller)
+        val getSellers = sellerDao.fetchSellers()
 
-        assertThat(sellerResponseEntity).isEqualTo(seller)
+        assertThat(getSellers).contains(seller)
     }
 }

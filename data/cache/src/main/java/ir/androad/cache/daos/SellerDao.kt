@@ -8,7 +8,7 @@ import ir.androad.cache.models.responses.SellerResponseEntity
 interface SellerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSeller(sellerResponseEntity: SellerResponseEntity): SellerResponseEntity
+    suspend fun insertSeller(sellerResponseEntity: SellerResponseEntity)
 
     @Query("SELECT * FROM `Seller_Table`")
     suspend fun fetchSellers(): List<SellerResponseEntity>?
@@ -20,7 +20,7 @@ interface SellerDao {
     suspend fun fetchSellerDetails(sellerId: Long?): SellerDetailsResponseEntity
 
     @Update
-    suspend fun updateSeller(sellerEntity: SellerResponseEntity?): Boolean
+    suspend fun updateSeller(sellerEntity: SellerResponseEntity?)
 
     @Query("DELETE FROM `Seller_Table`")
     suspend fun deleteSellers()

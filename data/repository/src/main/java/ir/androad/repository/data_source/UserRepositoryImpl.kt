@@ -1,6 +1,6 @@
 package ir.androad.repository.data_source
 
-import ir.androad.cache.AppDatabase
+import ir.androad.cache.daos.UserDao
 import ir.androad.domain.data_store.UserDataStore
 import ir.androad.domain.models.User
 import ir.androad.domain.repositories.UserRepository
@@ -15,17 +15,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
 class UserRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
-    appDatabase: AppDatabase,
+    private val userDao: UserDao,
     private val userDataStore: UserDataStore
 ): UserRepository {
 
-    private val userDao = appDatabase.userDao()
-    
     override suspend fun insertUser(user: User): ServiceResult<Boolean> {
         val userEntity = user.toEntity()
         val userDto = userEntity.toDto()

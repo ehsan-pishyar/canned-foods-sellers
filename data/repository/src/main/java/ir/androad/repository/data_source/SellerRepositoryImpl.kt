@@ -22,7 +22,7 @@ class SellerRepositoryImpl @Inject constructor(
 
     private val sellerDao = appDatabase.sellerDao()
 
-    override suspend fun insertSeller(seller: Seller): ServiceResult<SellerResponse> {
+    override suspend fun insertSeller(seller: Seller): ServiceResult<Boolean> {
         val sellerEntity = seller.toEntity()
         val sellerDto = sellerEntity.toDto()
 
@@ -30,16 +30,15 @@ class SellerRepositoryImpl @Inject constructor(
             apiService.insertSeller(sellerDto)
         } catch (e: IOException) {
             e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
+            return ServiceResult.Error(data = false, message = e.message)
         } catch (e: Exception) {
             e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
+            return ServiceResult.Error(data = false, message = e.message)
         }
 
         remoteSeller.let { sellerResponseDto ->
-            sellerDao.insertSeller(sellerResponseDto.toEntity()).let { sellerResponseEntity ->
-                return ServiceResult.Success(data = sellerResponseEntity.toDomain())
-            }
+            sellerDao.insertSeller(sellerResponseDto.toEntity())
+            return ServiceResult.Success(data = true)
         }
     }
 

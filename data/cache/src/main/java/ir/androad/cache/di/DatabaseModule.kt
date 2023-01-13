@@ -21,9 +21,8 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun appDatabaseProvider(@ApplicationContext app: Context, gsonConverters: GsonConverters) =
+    fun appDatabaseProvider(@ApplicationContext app: Context) =
         Room.databaseBuilder(app, AppDatabase::class.java, Constants.DB_NAME)
-            .addTypeConverter(gsonConverters)
             .fallbackToDestructiveMigration()
             .build()
 

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface SellerRepository {
 
-    suspend fun insertSeller(seller: Seller): ServiceResult<SellerResponse>
+    suspend fun insertSeller(seller: Seller): ServiceResult<Boolean>
     fun getSellers(): Flow<ServiceResult<List<SellerResponse>>>
     suspend fun getSellerById(id: Long): ServiceResult<SellerResponse>
     fun getSellersByTitle(title: String?): Flow<ServiceResult<List<SellerResponse>>>
