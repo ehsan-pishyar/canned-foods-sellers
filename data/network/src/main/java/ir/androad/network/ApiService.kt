@@ -1,6 +1,8 @@
 package ir.androad.network
 
 import ir.androad.network.models.*
+import ir.androad.network.models.responses.ResultDetailsResponseDto
+import ir.androad.network.models.responses.ResultResponseDto
 import ir.androad.network.models.responses.SellerResponseDto
 import retrofit2.http.*
 
@@ -184,61 +186,61 @@ interface ApiService {
     @POST("/results/create")
     suspend fun insertResult(
         @Body result: ResultDto
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
-    suspend fun getResults(): ResultDto
+    suspend fun getResults(): ResultResponseDto
 
     @GET("/results/{result_id}")
     suspend fun getResultDetails(
         @Path("result_id") resultId: Long
-    ): ResultDto
+    ): ResultDetailsResponseDto
 
     @GET("/results")
     suspend fun getResultsByTitle(
         @Query("title") resultTitle: String?
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
     suspend fun getResultsBySellerId(
         @Query("seller_id") sellerId: Long
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
     suspend fun getResultsBySellerCategoryId(
         @Query("sc_id") sellerCategoryId: Int
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
     suspend fun getResultsByResultCategoryId(
         @Query("rc_id") resultCategoryId: Int
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
     suspend fun getResultsByFoodCategoryId(
         @Query("fc_id") foodCategoryId: Int
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
     suspend fun getResultsByVoteCount(
         @Query("vote_count") vote_count: Long
-    ): ResultDto
+    ): ResultResponseDto
 
     @GET("/results")
     suspend fun getResultsByRating(
         @Query("rating") rating: Double
-    ): ResultDto
+    ): ResultResponseDto
 
     @PUT("/results/{result_id}/update")
     suspend fun updateResult(
         @Path("result_id") resultId: Long,
         @Body result: ResultDto
-    ): ResultDto
+    ): ResultResponseDto
 
     @DELETE("/results/{result_id}/delete")
     suspend fun deleteResultById(
         @Path("result_id") resultId: Long
-    ): ResultDto
+    ): ResultResponseDto
 
 
     // Comments Section ------------------------------------------------------------------------ >
