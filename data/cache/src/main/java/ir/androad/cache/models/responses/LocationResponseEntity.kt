@@ -2,12 +2,11 @@ package ir.androad.cache.models.responses
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ir.androad.cache.models.CityEntity
 
 data class StateResponseEntity (
     val id: Int?,
     val title: String?,
-    val cities: CityEntity?
+    val cities: List<CityResponseEntity>
 )
 
 data class CityResponseEntity (

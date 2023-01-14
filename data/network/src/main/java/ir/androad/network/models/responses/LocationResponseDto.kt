@@ -1,13 +1,12 @@
 package ir.androad.network.models.responses
 
-import ir.androad.network.models.CityDto
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class StateResponseDto(
     val id: Int?,
     val title: String?,
-    val cities: CityDto?
+    val cities: List<CityResponseDto>
 )
 
 @Serializable

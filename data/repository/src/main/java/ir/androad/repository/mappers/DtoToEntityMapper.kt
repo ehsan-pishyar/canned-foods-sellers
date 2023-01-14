@@ -6,131 +6,11 @@ import ir.androad.network.models.*
 import ir.androad.network.models.responses.*
 import java.util.UUID
 
-fun SellerCategoryDto.toEntity(): SellerCategoryEntity =
-    SellerCategoryEntity(
-        this.id,
-        this.title,
-        this.imagePath
-    )
-
-fun ResultCategoryDto.toEntity(): ResultCategoryEntity =
-    ResultCategoryEntity(
-        this.id,
-        this.title,
-        this.imagePath,
-        this.sellerCategoryId
-    )
-
-fun FoodCategoryDto.toEntity(): FoodCategoryEntity =
-    FoodCategoryEntity(
-        this.id,
-        this.title,
-        this.imagePath,
-        this.resultCategoryId
-    )
-
-fun SellerCommentDto.toEntity(): SellerCommentEntity =
-    SellerCommentEntity(
-        this.id,
-        this.fromCustomerId,
-        this.message,
-        this.dateCreated
-    )
-
-fun ResultCommentDto.toEntity(): ResultCommentEntity =
-    ResultCommentEntity(
-        this.id,
-        this.fromCustomerId,
-        this.message,
-        this.dateCreated
-    )
-
-fun CustomerDto.toEntity(): CustomerEntity =
-    CustomerEntity(
-        this.id,
-        this.userId,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.picture,
-        this.phoneNumber,
-        this.locationId,
-        this.sex,
-        this.birthDate,
-        this.dateCreated
-    )
-
-fun StateDto.toEntity(): StateEntity =
-    StateEntity(
-        this.id,
-        this.title
-    )
-
 fun CityDto.toEntity(): CityEntity =
     CityEntity(
         this.id,
         this.title,
         this.stateId
-    )
-
-fun LocationDto.toEntity(): LocationEntity =
-    LocationEntity(
-        this.id,
-        this.title,
-        this.lat,
-        this.lon,
-        this.cityId
-    )
-
-fun SellerRatingDto.toEntity(): SellerRatingEntity =
-    SellerRatingEntity(
-        this.id,
-        this.fromCustomerId,
-        this.rating
-    )
-
-fun ResultRatingDto.toEntity(): ResultRatingEntity =
-    ResultRatingEntity(
-        this.id,
-        this.fromCustomerId,
-        this.rating
-    )
-
-fun ResultDto.toEntity(): ResultEntity =
-    ResultEntity(
-        this.id,
-        this.sellerId,
-        this.title,
-        this.description,
-        this.sellerCategoryId,
-        this.resultCategoryId,
-        this.foodCategoryId,
-        this.imagePath,
-        this.price,
-        this.discount,
-        this.rating,
-        this.prepareDuration,
-        this.dateCreated
-    )
-
-fun SellerDto.toEntity(): SellerEntity =
-    SellerEntity(
-        this.id,
-        this.userId,
-        this.title,
-        this.description,
-        this.logo,
-        this.banner,
-        this.stateId,
-        this.cityId,
-        this.locationId,
-        this.sellerCategoryId,
-        this.resultCategoryId,
-        this.foodCategoryId,
-        this.deliveryFee,
-        this.deliveryDuration,
-        this.phoneNumber,
-        this.dateCreated
     )
 
 fun UserDto.toEntity(): UserEntity =
@@ -176,6 +56,13 @@ fun CustomerPurchaseHistoryDto.toEntity(): CustomerPurchaseHistoryEntity =
         this.sellerId,
         this.orderDate,
         this.orderStatus
+    )
+
+fun SellerCategoryResponseDto.toEntity(): SellerCategoryResponseEntity =
+    SellerCategoryResponseEntity(
+        this.id,
+        this.title,
+        this.imagePath
     )
 
 fun ResultsCategoryResponseDto.toEntity(): ResultsCategoryResponseEntity =
@@ -238,7 +125,7 @@ fun StateResponseDto.toEntity(): StateResponseEntity =
     StateResponseEntity(
         this.id,
         this.title,
-        this.cities?.toEntity()
+        this.cities.map { it.toEntity() }
     )
 
 fun CityResponseDto.toEntity(): CityResponseEntity =

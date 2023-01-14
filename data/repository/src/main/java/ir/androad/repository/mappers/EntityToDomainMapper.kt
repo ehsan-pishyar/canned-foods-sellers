@@ -5,131 +5,11 @@ import ir.androad.cache.models.responses.*
 import ir.androad.domain.models.*
 import ir.androad.domain.models.responses.*
 
-fun SellerCategoryEntity.toDomain(): SellerCategory =
-    SellerCategory(
-        this.id,
-        this.title,
-        this.imagePath
-    )
-
-fun ResultCategoryEntity.toDomain(): ResultCategory =
-    ResultCategory(
-        this.id,
-        this.title,
-        this.imagePath,
-        this.sellerCategoryId
-    )
-
-fun FoodCategoryEntity.toDomain(): FoodCategory =
-    FoodCategory(
-        this.id,
-        this.title,
-        this.imagePath,
-        this.resultCategoryId
-    )
-
-fun SellerCommentEntity.toDomain(): SellerComment =
-    SellerComment(
-        this.id,
-        this.fromCustomerId,
-        this.message,
-        this.dateCreated
-    )
-
-fun ResultCommentEntity.toDomain(): ResultComment =
-    ResultComment(
-        this.id,
-        this.fromCustomerId,
-        this.message,
-        this.dateCreated
-    )
-
-fun CustomerEntity.toDomain(): Customer =
-    Customer(
-        this.id,
-        this.userId,
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.picture,
-        this.phoneNumber,
-        this.locationId,
-        this.sex,
-        this.birthDate,
-        this.dateCreated
-    )
-
-fun StateEntity.toDomain(): State =
-    State(
-        this.id,
-        this.title
-    )
-
 fun CityEntity.toDomain(): City =
     City(
         this.id,
         this.title,
         this.stateId
-    )
-
-fun LocationEntity.toDomain(): Location =
-    Location(
-        this.id,
-        this.title,
-        this.lat,
-        this.lon,
-        this.cityId
-    )
-
-fun SellerRatingEntity.toDomain(): SellerRating =
-    SellerRating(
-        this.id,
-        this.fromCustomerId,
-        this.rating
-    )
-
-fun ResultRatingEntity.toDomain(): ResultRating =
-    ResultRating(
-        this.id,
-        this.fromCustomerId,
-        this.rating
-    )
-
-fun ResultEntity.toDomain(): Result =
-    Result(
-        this.id,
-        this.sellerId,
-        this.title,
-        this.description,
-        this.sellerCategoryId,
-        this.resultCategoryId,
-        this.foodCategoryId,
-        this.imagePath,
-        this.price,
-        this.discount,
-        this.rating,
-        this.prepareDuration,
-        this.dateCreated
-    )
-
-fun SellerEntity.toDomain(): Seller =
-    Seller(
-        this.id,
-        this.userId,
-        this.title,
-        this.description,
-        this.logo,
-        this.banner,
-        this.stateId,
-        this.cityId,
-        this.locationId,
-        this.sellerCategoryId,
-        this.resultCategoryId,
-        this.foodCategoryId,
-        this.deliveryFee,
-        this.deliveryDuration,
-        this.phoneNumber,
-        this.dateCreated
     )
 
 fun UserEntity.toDomain(): User =
@@ -175,6 +55,13 @@ fun CustomerPurchaseHistoryEntity.toDomain(): CustomerPurchaseHistory =
         this.sellerId,
         this.orderDate,
         this.orderStatus
+    )
+
+fun SellerCategoryResponseEntity.toDomain(): SellerCategoryResponse =
+    SellerCategoryResponse(
+        this.id,
+        this.title,
+        this.imagePath
     )
 
 fun ResultsCategoryResponseEntity.toDomain(): ResultsCategoryResponse =
@@ -235,7 +122,7 @@ fun StateResponseEntity.toDomain(): StateResponse =
     StateResponse(
         this.id,
         this.title,
-        this.cities?.toDomain()
+        this.cities.map { it.toDomain() }
     )
 
 fun CityResponseEntity.toDomain(): CityResponse =

@@ -1,9 +1,7 @@
 package ir.androad.network
 
 import ir.androad.network.models.*
-import ir.androad.network.models.responses.ResultDetailsResponseDto
-import ir.androad.network.models.responses.ResultResponseDto
-import ir.androad.network.models.responses.SellerResponseDto
+import ir.androad.network.models.responses.*
 import retrofit2.http.*
 
 interface ApiService {
@@ -148,38 +146,48 @@ interface ApiService {
 
     // Categories Section ---------------------------------------------------------------------- >
     @GET("/seller-categories")
-    suspend fun getSellerCategories(): SellerCategoryDto
+    suspend fun getSellerCategories(): SellerCategoryResponseDto
 
     @GET("/seller-categories")
     suspend fun getSellerCategoryById(
         @Query("id") sellerCategoryId: Int
-    ): SellerCategoryDto
+    ): SellerCategoryResponseDto
 
     @GET("/result-categories")
     suspend fun getResultCategories(
         @Query("sc_id") sellerCategoryId: Int
-    ): ResultCategoryDto
+    ): ResultsCategoryResponseDto
 
     @GET("/result-categories")
     suspend fun getResultCategoryById(
         @Query("id") id: Int
-    ): ResultCategoryDto
+    ): ResultsCategoryResponseDto
+
+    @GET("/result-categories")
+    suspend fun getResultCategoriesByTitle(
+        @Query("title") resultCategoryTitle: String?
+    ): ResultsCategoryResponseDto
 
     @GET("/food-categories")
     suspend fun getFoodCategories(
         @Query("rc_id") resultCategoryId: Int
-    ): FoodCategoryDto
+    ): FoodCategoryResponseDto
 
     @GET("/food-categories")
     suspend fun getFoodCategoryById(
         @Query("id") foodCategoryId: Int
-    ): FoodCategoryDto
+    ): FoodCategoryResponseDto
+
+    @GET("/food-categories")
+    suspend fun getFoodCategoriesByTitle(
+        @Query("fc_title") foodCategoryTitle: String?
+    ): FoodCategoryResponseDto
 
     @PUT("/food-categories/{food_category_id}/update")
     suspend fun updateFoodCategory(
         @Path("food_category_id") foodCategoryId: Int,
         @Body foodCategoryDto: FoodCategoryDto
-    ): FoodCategoryDto
+    ): FoodCategoryResponseDto
 
 
     // Result Section -------------------------------------------------------------------------- >

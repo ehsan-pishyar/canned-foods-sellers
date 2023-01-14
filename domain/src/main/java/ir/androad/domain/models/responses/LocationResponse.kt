@@ -1,11 +1,9 @@
 package ir.androad.domain.models.responses
 
-import ir.androad.domain.models.City
-
 data class StateResponse (
     val id: Int?,
     val title: String?,
-    val cities: City? // TODO: fix this shit
+    val cities: List<CityResponse>
 )
 
 data class CityResponse (
