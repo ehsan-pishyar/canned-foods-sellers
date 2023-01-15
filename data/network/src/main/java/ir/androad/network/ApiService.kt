@@ -93,55 +93,54 @@ interface ApiService {
 
     // Location Section ------------------------------------------------------------------------ >
     @GET("/states")
-    suspend fun getStates(): StateDto
+    suspend fun getStates(): StateResponseDto
 
     @GET("/states")
     suspend fun getStateById(
         @Query("id") stateId: Int
-    ): StateDto
+    ): StateResponseDto
 
     @GET("/states")
     suspend fun getStatesByTitle(
         @Query("title") stateTitle: String?
-    ): StateDto
+    ): StateResponseDto
 
     @GET("/cities")
     suspend fun getCities(
         @Query("state_id") stateId: Int
-    ): CityDto
+    ): CityResponseDto
 
     @GET("/cities")
     suspend fun getCityById(
         @Query("state_id") stateId: Int,
         @Query("id") cityId: Int
-    ): CityDto
+    ): CityResponseDto
 
     @GET("/cities")
     suspend fun getCitiesByTitle(
-        @Query("state_id") stateId: Int,
         @Query("title") cityTitle: String?
-    ): CityDto
+    ): CityResponseDto
 
     @GET("/locations")
     suspend fun getLocations(
         @Query("city_id") cityId: Int
-    ): LocationDto
+    ): LocationResponseDto
 
     @GET("/locations")
     suspend fun getLocationById(
         @Query("id") locationId: Long
-    ): LocationDto
+    ): LocationResponseDto
 
     @GET("/locations")
     suspend fun getLocationsByTitle(
         @Query("title") title: String?
-    ): LocationDto
+    ): LocationResponseDto
 
     @PUT("/locations/{location_id}/update")
     suspend fun updateLocation(
         @Path("location_id") locationId: Long,
         @Body locationDto: LocationDto
-    ): LocationDto
+    ): LocationResponseDto
 
 
     // Categories Section ---------------------------------------------------------------------- >
