@@ -6,18 +6,19 @@ import ir.androad.domain.models.responses.ResultDetailsResponse
 import ir.androad.domain.models.responses.ResultResponse
 import ir.androad.domain.repositories.ResultRepository
 import ir.androad.domain.utils.ServiceResult
-import ir.androad.network.ApiService
 import ir.androad.network.models.responses.ResultResponseDto
+import ir.androad.network.services.ResultApiService
 import ir.androad.repository.mappers.toDomain
 import ir.androad.repository.mappers.toDto
 import ir.androad.repository.mappers.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
 class ResultRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val resultApiService: ResultApiService,
     private val resultDao: ResultDao
 ): ResultRepository {
 
@@ -26,7 +27,7 @@ class ResultRepositoryImpl @Inject constructor(
         val resultDto = resultEntity.toDto()
 
         val remoteResult = try {
-            apiService.insertResult(resultDto)
+            resultApiService.insertResult(resultDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = false, message = e.message)
@@ -49,7 +50,7 @@ class ResultRepositoryImpl @Inject constructor(
         }
 
         val remoteResults = try {
-            apiService.getResults()
+            resultApiService.getResults()
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -73,7 +74,7 @@ class ResultRepositoryImpl @Inject constructor(
         }
 
         val remoteResultDetails = try {
-            apiService.getResultDetails(resultId)
+            resultApiService.getResultDetails(resultId)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
@@ -97,7 +98,7 @@ class ResultRepositoryImpl @Inject constructor(
         }
 
         val remoteResult = try {
-            apiService.getResultsByTitle(resultTitle)
+            resultApiService.getResultsByTitle(resultTitle)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -115,7 +116,7 @@ class ResultRepositoryImpl @Inject constructor(
 
     override suspend fun getResultsBySellerId(sellerId: Long): ServiceResult<List<ResultResponse>?> {
         return try {
-            val remoteResults = apiService.getResultsBySellerId(sellerId)
+            val remoteResults = resultApiService.getResultsBySellerId(sellerId)
             ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
         } catch (e: IOException) {
             e.printStackTrace()
@@ -128,7 +129,7 @@ class ResultRepositoryImpl @Inject constructor(
 
     override suspend fun getResultsBySellerCategoryId(sellerCategoryId: Int): ServiceResult<List<ResultResponse>?> {
         return try {
-            val remoteResults = apiService.getResultsBySellerCategoryId(sellerCategoryId)
+            val remoteResults = resultApiService.getResultsBySellerCategoryId(sellerCategoryId)
             ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
         } catch (e: IOException) {
             e.printStackTrace()
@@ -141,7 +142,7 @@ class ResultRepositoryImpl @Inject constructor(
 
     override suspend fun getResultsByResultCategoryId(resultCategoryId: Int): ServiceResult<List<ResultResponse>?> {
         return try {
-            val remoteResults = apiService.getResultsByResultCategoryId(resultCategoryId)
+            val remoteResults = resultApiService.getResultsByResultCategoryId(resultCategoryId)
             ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
         } catch (e: IOException) {
             e.printStackTrace()
@@ -154,7 +155,7 @@ class ResultRepositoryImpl @Inject constructor(
 
     override suspend fun getResultsByFoodCategoryId(foodCategoryId: Int): ServiceResult<List<ResultResponse>?> {
         return try {
-            val remoteResults = apiService.getResultsByFoodCategoryId(foodCategoryId)
+            val remoteResults = resultApiService.getResultsByFoodCategoryId(foodCategoryId)
             ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
         } catch (e: IOException) {
             e.printStackTrace()
@@ -169,7 +170,7 @@ class ResultRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteResults = try {
-            apiService.getResultsByVoteCount(voteCount)
+            resultApiService.getResultsByVoteCount(voteCount)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -189,7 +190,7 @@ class ResultRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteResults = try {
-            apiService.getResultsByRating(rating)
+            resultApiService.getResultsByRating(rating)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -210,7 +211,7 @@ class ResultRepositoryImpl @Inject constructor(
         val resultDto = resultEntity.toDto()
 
         val remoteResult = try {
-            apiService.updateResult(resultId = resultDto.id!!, result = resultDto)
+            resultApiService.updateResult(resultId = resultDto.id!!, result = resultDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = false, message = e.message)
@@ -226,6 +227,15 @@ class ResultRepositoryImpl @Inject constructor(
     }
 
     override suspend fun deleteResult(resultId: Long): ServiceResult<Boolean> {
+        try {
+            resultApiService.deleteResultById(resultId)
+        } catch (e: IOException) {
+            Timber.e("Result IO Error: ", e.printStackTrace())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Timber.e("Result Other Error: ", e.printStackTrace())
+        }
+
         resultDao.deleteResultById(resultId)
         val result = resultDao.fetchResultById(resultId)
         return if (result.title?.trim()?.length == 0) {

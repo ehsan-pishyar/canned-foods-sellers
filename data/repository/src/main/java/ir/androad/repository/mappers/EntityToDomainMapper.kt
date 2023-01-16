@@ -5,13 +5,6 @@ import ir.androad.cache.models.responses.*
 import ir.androad.domain.models.*
 import ir.androad.domain.models.responses.*
 
-fun CityEntity.toDomain(): City =
-    City(
-        this.id,
-        this.title,
-        this.stateId
-    )
-
 fun UserEntity.toDomain(): User =
     User(
         this.id!!,
@@ -45,6 +38,13 @@ fun SellerCloseHoursEntity.toDomain(): SellerCloseHours =
         this.wednesday,
         this.thursday,
         this.friday
+    )
+
+fun SellerRatingsResponseEntity.toDomain(): SellerRatingsResponse =
+    SellerRatingsResponse(
+        this.id,
+        this.fromCustomer,
+        this.rating
     )
 
 fun CustomerPurchaseHistoryEntity.toDomain(): CustomerPurchaseHistory =
@@ -82,6 +82,7 @@ fun FoodCategoryResponseEntity.toDomain(): FoodCategoryResponse =
 
 fun SellerCommentResponseEntity.toDomain(): SellerCommentResponse =
     SellerCommentResponse(
+        this.id,
         this.from,
         this.message,
         this.dateCreated
@@ -89,9 +90,17 @@ fun SellerCommentResponseEntity.toDomain(): SellerCommentResponse =
 
 fun ResultCommentResponseEntity.toDomain(): ResultCommentResponse =
     ResultCommentResponse(
+        this.id,
         this.from,
         this.message,
         this.dateCreated
+    )
+
+fun ResultRatingsResponseEntity.toDomain(): ResultRatingsResponse =
+    ResultRatingsResponse(
+        this.id,
+        this.fromCustomer,
+        this.rating
     )
 
 fun CustomerResponseEntity.toDomain(): CustomerResponse =

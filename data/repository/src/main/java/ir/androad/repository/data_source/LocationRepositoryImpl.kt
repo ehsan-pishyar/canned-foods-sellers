@@ -1,16 +1,18 @@
 package ir.androad.repository.data_source
 
+import ir.androad.cache.daos.LocationDao
 import ir.androad.domain.models.Location
 import ir.androad.domain.models.responses.CityResponse
 import ir.androad.domain.models.responses.LocationResponse
 import ir.androad.domain.models.responses.StateResponse
 import ir.androad.domain.repositories.LocationRepository
 import ir.androad.domain.utils.ServiceResult
-import ir.androad.network.ApiService
 import ir.androad.network.models.responses.CityResponseDto
 import ir.androad.network.models.responses.LocationResponseDto
 import ir.androad.network.models.responses.StateResponseDto
+import ir.androad.network.services.LocationApiService
 import ir.androad.repository.mappers.toDomain
+import ir.androad.repository.mappers.toDto
 import ir.androad.repository.mappers.toEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,12 +20,13 @@ import java.io.IOException
 import javax.inject.Inject
 
 class LocationRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val locationApiService: LocationApiService,
+    private val locationDao: LocationDao
 ): LocationRepository {
 
     override suspend fun getStates(): ServiceResult<List<StateResponse>?> {
         val remoteStates = try {
-            apiService.getStates()
+            locationApiService.getStates()
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
@@ -37,27 +40,11 @@ class LocationRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getStateById(stateId: Int): ServiceResult<StateResponse> {
-        val remoteState = try {
-            apiService.getStateById(stateId)
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
-        }
-
-        remoteState.let {
-            return ServiceResult.Success(data = it.toEntity().toDomain())
-        }
-    }
-
     override fun getStatesByTitle(stateTitle: String?): Flow<ServiceResult<List<StateResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteStates = try {
-            apiService.getStatesByTitle(stateTitle)
+            locationApiService.getStatesByTitle(stateTitle)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -75,7 +62,7 @@ class LocationRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteCities = try {
-            apiService.getCities(stateId)
+            locationApiService.getCities(stateId)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -91,7 +78,7 @@ class LocationRepositoryImpl @Inject constructor(
 
     override suspend fun getCityById(stateId: Int, cityId: Int): ServiceResult<CityResponse> {
         val remoteCity = try {
-            apiService.getCityById(stateId, cityId)
+            locationApiService.getCityById(stateId, cityId)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
@@ -109,7 +96,7 @@ class LocationRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteCities = try {
-            apiService.getCitiesByTitle(cityTitle)
+            locationApiService.getCitiesByTitle(cityTitle)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -123,11 +110,31 @@ class LocationRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun insertLocation(location: Location): ServiceResult<Boolean> {
+        val locationEntity = location.toEntity()
+        val locationDto = locationEntity.toDto()
+
+        val remoteLocation = try {
+            locationApiService.insertLocation(locationDto)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return ServiceResult.Error(data = false, message = e.message)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return ServiceResult.Error(data = false, message = e.message)
+        }
+
+        remoteLocation.let {
+            locationDao.insertLocation(it.toEntity())
+            return ServiceResult.Success(data = true)
+        }
+    }
+
     override fun getLocations(cityId: Int): Flow<ServiceResult<List<LocationResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteLocations = try {
-            apiService.getLocations(cityId)
+            locationApiService.getLocations(cityId)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -143,7 +150,7 @@ class LocationRepositoryImpl @Inject constructor(
 
     override suspend fun getLocationById(locationId: Long): ServiceResult<LocationResponse> {
         val remoteLocation = try {
-            apiService.getLocationById(locationId)
+            locationApiService.getLocationById(locationId)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
@@ -161,7 +168,7 @@ class LocationRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = true))
 
         val remoteLocations = try {
-            apiService.getLocationsByTitle(locationTitle)
+            locationApiService.getLocationsByTitle(locationTitle)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -179,6 +186,22 @@ class LocationRepositoryImpl @Inject constructor(
         locationId: Long,
         location: Location
     ): ServiceResult<Boolean> {
-        TODO("Not yet implemented")
+        val locationEntity = location.toEntity()
+        val locationDto = locationEntity.toDto()
+
+        val remoteLocation = try {
+            locationApiService.updateLocation(locationId, locationDto)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return ServiceResult.Error(data = null, message = e.message)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return ServiceResult.Error(data = null, message = e.message)
+        }
+
+        remoteLocation.let {
+            locationDao.updateLocation(locationId, it.toEntity())
+            return ServiceResult.Success(data = true)
+        }
     }
 }

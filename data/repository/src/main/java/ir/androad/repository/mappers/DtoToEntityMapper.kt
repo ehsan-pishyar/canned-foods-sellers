@@ -4,14 +4,6 @@ import ir.androad.cache.models.*
 import ir.androad.cache.models.responses.*
 import ir.androad.network.models.*
 import ir.androad.network.models.responses.*
-import java.util.UUID
-
-fun CityDto.toEntity(): CityEntity =
-    CityEntity(
-        this.id,
-        this.title,
-        this.stateId
-    )
 
 fun UserDto.toEntity(): UserEntity =
     UserEntity(
@@ -48,6 +40,13 @@ fun SellerCloseHoursDto.toEntity(): SellerCloseHoursEntity =
         this.friday
     )
 
+fun SellerRatingsResponseDto.toEntity(): SellerRatingsResponseEntity =
+    SellerRatingsResponseEntity(
+        this.id,
+        this.fromCustomer,
+        this.rating
+    )
+
 fun CustomerPurchaseHistoryDto.toEntity(): CustomerPurchaseHistoryEntity =
     CustomerPurchaseHistoryEntity(
         this.id,
@@ -81,20 +80,27 @@ fun FoodCategoryResponseDto.toEntity(): FoodCategoryResponseEntity =
         this.resultsCategory
     )
 
-fun SellerCommentResponseDto.toEntity(id: UUID): SellerCommentResponseEntity =
+fun SellerCommentResponseDto.toEntity(): SellerCommentResponseEntity =
     SellerCommentResponseEntity(
-        id,
+        this.id,
         this.from,
         this.message,
         this.dateCreated
     )
 
-fun ResultCommentResponseDto.toEntity(id: UUID): ResultCommentResponseEntity =
+fun ResultCommentResponseDto.toEntity(): ResultCommentResponseEntity =
     ResultCommentResponseEntity(
-        id,
+        this.id,
         this.from,
         this.message,
         this.dateCreated
+    )
+
+fun ResultRatingsResponseDto.toEntity(): ResultRatingsResponseEntity =
+    ResultRatingsResponseEntity(
+        this.id,
+        this.fromCustomer,
+        this.rating
     )
 
 fun CustomerResponseDto.toEntity(): CustomerResponseEntity =
@@ -171,7 +177,7 @@ fun ResultDetailsResponseDto.toEntity(): ResultDetailsResponseEntity =
         this.seller?.toEntity(),
         this.foodCategory,
         this.rating,
-        this.comments?.map { it?.toEntity(id = UUID(8L, 256L)) },
+        this.comments?.map { it?.toEntity() },
         this.dateCreated
     )
 
@@ -202,7 +208,7 @@ fun SellerDetailsResponseDto.toEntity(): SellerDetailsResponseEntity =
         banner = this.banner,
         location = this.location?.toEntity(),
         results = this.results?.map { it?.toEntity() },
-        comments = this.comments?.map { it?.toEntity(id = UUID(8L, 256L)) },
+        comments = this.comments?.map { it?.toEntity() },
         deliveryFee = this.deliveryFee,
         deliveryDuration = this.deliveryDuration,
         phoneNumber = this.phoneNumber,

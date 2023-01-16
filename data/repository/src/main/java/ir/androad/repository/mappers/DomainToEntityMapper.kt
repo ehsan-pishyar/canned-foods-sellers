@@ -1,8 +1,10 @@
 package ir.androad.repository.mappers
 
+import ir.androad.cache.models.LocationEntity
 import ir.androad.cache.models.ResultEntity
 import ir.androad.cache.models.SellerEntity
 import ir.androad.cache.models.UserEntity
+import ir.androad.domain.models.Location
 import ir.androad.domain.models.Result
 import ir.androad.domain.models.Seller
 import ir.androad.domain.models.User
@@ -51,4 +53,13 @@ fun Result.toEntity(): ResultEntity =
         this.rating,
         this.prepareDuration,
         this.dateCreated
+    )
+
+fun Location.toEntity(): LocationEntity =
+    LocationEntity(
+        this.id,
+        this.title,
+        this.lat,
+        this.lon,
+        this.cityId
     )

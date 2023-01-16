@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import ir.androad.cache.AppDatabase
 import ir.androad.domain.repositories.SellerRepository
-import ir.androad.network.ApiService
+import ir.androad.network.services.SellerApiService
 import ir.androad.repository.data_source.SellerRepositoryImpl
 
 @Module
@@ -15,9 +15,9 @@ object SellerRepositoryModule {
 
     @Provides
     fun providesSellerRepositoryImpl(
-        apiService: ApiService,
+        sellerApiService: SellerApiService,
         appDatabase: AppDatabase
-    ): SellerRepositoryImpl = SellerRepositoryImpl(apiService, appDatabase)
+    ): SellerRepositoryImpl = SellerRepositoryImpl(sellerApiService = sellerApiService, appDatabase = appDatabase)
 
     @Provides
     fun providesSellerRepository(

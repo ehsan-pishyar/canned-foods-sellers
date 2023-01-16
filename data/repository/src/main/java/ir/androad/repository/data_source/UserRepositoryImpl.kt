@@ -5,7 +5,7 @@ import ir.androad.domain.data_store.UserDataStore
 import ir.androad.domain.models.User
 import ir.androad.domain.repositories.UserRepository
 import ir.androad.domain.utils.ServiceResult
-import ir.androad.network.ApiService
+import ir.androad.network.services.UserApiService
 import ir.androad.repository.mappers.toDomain
 import ir.androad.repository.mappers.toDto
 import ir.androad.repository.mappers.toEntity
@@ -17,7 +17,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val userApiService: UserApiService,
     private val userDao: UserDao,
     private val userDataStore: UserDataStore
 ): UserRepository {
@@ -27,7 +27,7 @@ class UserRepositoryImpl @Inject constructor(
         val userDto = userEntity.toDto()
 
         val remoteUser = try {
-            apiService.insertUser(userDto)
+            userApiService.insertUser(userDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(message = e.message)
@@ -50,7 +50,7 @@ class UserRepositoryImpl @Inject constructor(
 
         if (userDao.isUserCacheAvailable() == 0) {
             val userDto = try {
-                apiService.getUserById(userId)
+                userApiService.getUserById(userId)
             } catch (e: IOException) {
                 e.printStackTrace()
                 return ServiceResult.Error(message = e.message)
@@ -67,7 +67,7 @@ class UserRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(true))
 
         val usersRemote = try {
-            apiService.getUsersByEmail(email).map { it.toEntity().toDomain() }
+            userApiService.getUsersByEmail(email).map { it.toEntity().toDomain() }
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(message = e.message))
@@ -88,7 +88,7 @@ class UserRepositoryImpl @Inject constructor(
         password: String?
     ): ServiceResult<Boolean> {
         val remoteUser = try {
-            apiService.getUserByEmailAndPassword(email, password)
+            userApiService.getUserByEmailAndPassword(email, password)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = false, message = e.message)
@@ -107,7 +107,7 @@ class UserRepositoryImpl @Inject constructor(
         val userDto = userEntity.toDto()
 
         val userRemote = try {
-            apiService.updateUser(user.id, userDto)
+            userApiService.updateUser(user.id, userDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(message = e.message)

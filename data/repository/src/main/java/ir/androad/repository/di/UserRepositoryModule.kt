@@ -4,12 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
-import ir.androad.cache.AppDatabase
 import ir.androad.cache.daos.UserDao
 import ir.androad.domain.data_store.UserDataStore
 import ir.androad.domain.repositories.UserRepository
 import ir.androad.domain.use_cases.user.*
-import ir.androad.network.ApiService
+import ir.androad.network.services.UserApiService
 import ir.androad.repository.data_source.UserRepositoryImpl
 
 @Module
@@ -18,10 +17,10 @@ object UserRepositoryModule {
 
     @Provides
     fun providesUserRepositoryImpl(
-        apiService: ApiService,
+        userApiService: UserApiService,
         userDao: UserDao,
         userDataStore: UserDataStore
-    ): UserRepositoryImpl = UserRepositoryImpl(apiService, userDao, userDataStore)
+    ): UserRepositoryImpl = UserRepositoryImpl(userApiService = userApiService, userDao = userDao, userDataStore = userDataStore)
 
     @Provides
     fun providesUserRepository(

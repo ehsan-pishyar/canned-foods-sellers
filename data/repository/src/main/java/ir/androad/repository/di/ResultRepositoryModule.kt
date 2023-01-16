@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import ir.androad.cache.daos.ResultDao
 import ir.androad.domain.repositories.ResultRepository
-import ir.androad.network.ApiService
+import ir.androad.network.services.ResultApiService
 import ir.androad.repository.data_source.ResultRepositoryImpl
 
 @Module
@@ -15,9 +15,9 @@ object ResultRepositoryModule {
 
     @Provides
     fun providesResultRepositoryImpl(
-        apiService: ApiService,
+        resultApiService: ResultApiService,
         resultDao: ResultDao
-    ): ResultRepositoryImpl = ResultRepositoryImpl(apiService, resultDao)
+    ): ResultRepositoryImpl = ResultRepositoryImpl(resultApiService = resultApiService, resultDao = resultDao)
 
     @Provides
     fun providesResultRepository(

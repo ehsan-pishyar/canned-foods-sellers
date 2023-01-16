@@ -5,8 +5,8 @@ import ir.androad.domain.models.Seller
 import ir.androad.domain.models.responses.SellerResponse
 import ir.androad.domain.repositories.SellerRepository
 import ir.androad.domain.utils.ServiceResult
-import ir.androad.network.ApiService
 import ir.androad.network.models.responses.SellerResponseDto
+import ir.androad.network.services.SellerApiService
 import ir.androad.repository.mappers.toDomain
 import ir.androad.repository.mappers.toDto
 import ir.androad.repository.mappers.toEntity
@@ -16,7 +16,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class SellerRepositoryImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val sellerApiService: SellerApiService,
     appDatabase: AppDatabase
 ): SellerRepository {
 
@@ -27,7 +27,7 @@ class SellerRepositoryImpl @Inject constructor(
         val sellerDto = sellerEntity.toDto()
 
         val remoteSeller = try {
-            apiService.insertSeller(sellerDto)
+            sellerApiService.insertSeller(sellerDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = false, message = e.message)
@@ -51,7 +51,7 @@ class SellerRepositoryImpl @Inject constructor(
         emit(ServiceResult.Success(sellers))
 
         val remoteSellers = try {
-            apiService.getSellers()
+            sellerApiService.getSellers()
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -70,7 +70,7 @@ class SellerRepositoryImpl @Inject constructor(
 
     override suspend fun getSellerById(id: Long): ServiceResult<SellerResponse> {
         return try {
-            val remoteSeller = apiService.getSellerById(id)
+            val remoteSeller = sellerApiService.getSellerById(id)
             ServiceResult.Success(remoteSeller.toEntity().toDomain())
         } catch (e: IOException) {
             e.printStackTrace()
@@ -84,7 +84,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersByTitle(title: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersByTitle(title)
+            sellerApiService.getSellersByTitle(title)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -100,7 +100,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersByDescription(description: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersByDescription(description)
+            sellerApiService.getSellersByDescription(description)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -116,7 +116,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersByLocationTitle(locationTitle: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersByLocationTitle(locationTitle)
+            sellerApiService.getSellersByLocationTitle(locationTitle)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -132,7 +132,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersByResultTitle(resultTitle: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersByResultTitle(resultTitle)
+            sellerApiService.getSellersByResultTitle(resultTitle)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -148,7 +148,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersBySellerCategoryId(sellerCategoryId: Int): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersBySellerCategoryId(sellerCategoryId)
+            sellerApiService.getSellersBySellerCategoryId(sellerCategoryId)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -164,7 +164,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersByResultCategoryId(resultCategoryId: Int): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersByResultCategoryId(resultCategoryId)
+            sellerApiService.getSellersByResultCategoryId(resultCategoryId)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -180,7 +180,7 @@ class SellerRepositoryImpl @Inject constructor(
     override fun getSellersByFoodCategoryId(foodCategoryId: Int): Flow<ServiceResult<List<SellerResponse>>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
         val remoteSellers = try {
-            apiService.getSellersByFoodCategoryId(foodCategoryId)
+            sellerApiService.getSellersByFoodCategoryId(foodCategoryId)
         } catch (e: IOException) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
@@ -198,7 +198,7 @@ class SellerRepositoryImpl @Inject constructor(
         val sellerDto = sellerEntity.toDto()
 
         val remoteSeller = try {
-            apiService.updateSeller(sellerId = sellerDto.id!!, sellerDto = sellerDto)
+            sellerApiService.updateSeller(sellerId = sellerDto.id!!, sellerDto = sellerDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
