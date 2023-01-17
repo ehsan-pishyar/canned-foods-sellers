@@ -42,7 +42,7 @@ class SellerRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getSellers(): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellers(): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
 
         val sellers = sellerDao.fetchSellers()?.map {
@@ -69,9 +69,8 @@ class SellerRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSellerById(id: Long): ServiceResult<SellerResponse> {
-        return try {
-            val remoteSeller = sellerApiService.getSellerById(id)
-            ServiceResult.Success(remoteSeller.toEntity().toDomain())
+        val remoteSeller = try {
+            sellerApiService.getSellerById(id)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
@@ -79,10 +78,15 @@ class SellerRepositoryImpl @Inject constructor(
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)
         }
+
+        remoteSeller.let {
+            return ServiceResult.Success(remoteSeller.toEntity().toDomain())
+        }
     }
 
-    override fun getSellersByTitle(title: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersByTitle(title: String?): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersByTitle(title)
         } catch (e: IOException) {
@@ -91,14 +95,18 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override fun getSellersByDescription(description: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersByDescription(description: String?): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersByDescription(description)
         } catch (e: IOException) {
@@ -107,14 +115,18 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override fun getSellersByLocationTitle(locationTitle: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersByLocationTitle(locationTitle: String?): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersByLocationTitle(locationTitle)
         } catch (e: IOException) {
@@ -123,14 +135,18 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override fun getSellersByResultTitle(resultTitle: String?): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersByResultTitle(resultTitle: String?): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersByResultTitle(resultTitle)
         } catch (e: IOException) {
@@ -139,14 +155,18 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override fun getSellersBySellerCategoryId(sellerCategoryId: Int): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersBySellerCategoryId(sellerCategoryId: Int): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersBySellerCategoryId(sellerCategoryId)
         } catch (e: IOException) {
@@ -155,14 +175,18 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override fun getSellersByResultCategoryId(resultCategoryId: Int): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersByResultCategoryId(resultCategoryId: Int): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersByResultCategoryId(resultCategoryId)
         } catch (e: IOException) {
@@ -171,14 +195,18 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override fun getSellersByFoodCategoryId(foodCategoryId: Int): Flow<ServiceResult<List<SellerResponse>>> = flow {
+    override fun getSellersByFoodCategoryId(foodCategoryId: Int): Flow<ServiceResult<List<SellerResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
+
         val remoteSellers = try {
             sellerApiService.getSellersByFoodCategoryId(foodCategoryId)
         } catch (e: IOException) {
@@ -187,18 +215,21 @@ class SellerRepositoryImpl @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(ServiceResult.Error(data = null, message = e.message))
-        } as List<SellerResponseDto>
+        } as SellerResponseDto
 
-        emit(ServiceResult.Success(remoteSellers.map { it.toEntity().toDomain() }))
+        remoteSellers.let {
+            emit(ServiceResult.Success(listOf(it.toEntity().toDomain())))
+        }
+
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun updateSeller(seller: Seller): ServiceResult<Boolean> {
+    override suspend fun updateSeller(sellerId: Long, seller: Seller): ServiceResult<Boolean> {
         val sellerEntity = seller.toEntity()
         val sellerDto = sellerEntity.toDto()
 
         val remoteSeller = try {
-            sellerApiService.updateSeller(sellerId = sellerDto.id!!, sellerDto = sellerDto)
+            sellerApiService.updateSeller(sellerId = sellerId, sellerDto = sellerDto)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)

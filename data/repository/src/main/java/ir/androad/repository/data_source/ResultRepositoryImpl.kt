@@ -17,7 +17,7 @@ import timber.log.Timber
 import java.io.IOException
 import javax.inject.Inject
 
-class ResultRepositoryImpl @Inject constructor(
+class ResultRepositoryImpl @Inject constructor (
     private val resultApiService: ResultApiService,
     private val resultDao: ResultDao
 ): ResultRepository {
@@ -42,7 +42,7 @@ class ResultRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getResults(): Flow<ServiceResult<List<ResultResponse>>> = flow {
+    override fun getResults(): Flow<ServiceResult<List<ResultResponse>?>> = flow {
         emit(ServiceResult.Loading(isLoading = true))
 
         resultDao.fetchResults()?.map {
@@ -114,56 +114,84 @@ class ResultRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun getResultsBySellerId(sellerId: Long): ServiceResult<List<ResultResponse>?> {
-        return try {
-            val remoteResults = resultApiService.getResultsBySellerId(sellerId)
-            ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
+    override fun getResultsBySellerId(sellerId: Long): Flow<ServiceResult<List<ResultResponse>?>> = flow {
+        emit(ServiceResult.Loading(isLoading = true))
+
+        val remoteResults = try {
+            resultApiService.getResultsBySellerId(sellerId)
         } catch (e: IOException) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
         } catch (e: Exception) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
+        } as ResultResponseDto
+
+        remoteResults.let {
+            emit(ServiceResult.Success(data = listOf(it.toEntity().toDomain())))
         }
+
+        emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun getResultsBySellerCategoryId(sellerCategoryId: Int): ServiceResult<List<ResultResponse>?> {
-        return try {
-            val remoteResults = resultApiService.getResultsBySellerCategoryId(sellerCategoryId)
-            ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
+    override fun getResultsBySellerCategoryId(sellerCategoryId: Int): Flow<ServiceResult<List<ResultResponse>?>> = flow {
+        emit(ServiceResult.Loading(isLoading = true))
+
+        val remoteResults = try {
+            resultApiService.getResultsBySellerCategoryId(sellerCategoryId)
         } catch (e: IOException) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
         } catch (e: Exception) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
+        } as ResultResponseDto
+
+        remoteResults.let {
+            emit(ServiceResult.Success(data = listOf(it.toEntity().toDomain())))
         }
+
+        emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun getResultsByResultCategoryId(resultCategoryId: Int): ServiceResult<List<ResultResponse>?> {
-        return try {
-            val remoteResults = resultApiService.getResultsByResultCategoryId(resultCategoryId)
-            ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
+    override fun getResultsByResultCategoryId(resultCategoryId: Int): Flow<ServiceResult<List<ResultResponse>?>> = flow {
+        emit(ServiceResult.Loading(isLoading = true))
+
+        val remoteResults = try {
+            resultApiService.getResultsByResultCategoryId(resultCategoryId)
         } catch (e: IOException) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
         } catch (e: Exception) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
+        } as ResultResponseDto
+
+        remoteResults.let {
+            emit(ServiceResult.Success(data = listOf(it.toEntity().toDomain())))
         }
+
+        emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun getResultsByFoodCategoryId(foodCategoryId: Int): ServiceResult<List<ResultResponse>?> {
-        return try {
-            val remoteResults = resultApiService.getResultsByFoodCategoryId(foodCategoryId)
-            ServiceResult.Success(data = listOf(remoteResults.toEntity().toDomain()))
+    override fun getResultsByFoodCategoryId(foodCategoryId: Int): Flow<ServiceResult<List<ResultResponse>?>> = flow {
+        emit(ServiceResult.Loading(isLoading = true))
+
+        val remoteResults = try {
+            resultApiService.getResultsByFoodCategoryId(foodCategoryId)
         } catch (e: IOException) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
         } catch (e: Exception) {
             e.printStackTrace()
-            ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
+        } as ResultResponseDto
+
+        remoteResults.let {
+            emit(ServiceResult.Success(data = listOf(it.toEntity().toDomain())))
         }
+
+        emit(ServiceResult.Loading(isLoading = false))
     }
 
     override fun getResultsByVoteCount(voteCount: Long): Flow<ServiceResult<List<ResultResponse>?>> = flow {

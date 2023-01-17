@@ -9,13 +9,13 @@ import kotlinx.coroutines.flow.Flow
 interface ResultRepository {
 
     suspend fun insertResult(result: Result): ServiceResult<Boolean>
-    fun getResults(): Flow<ServiceResult<List<ResultResponse>>>
+    fun getResults(): Flow<ServiceResult<List<ResultResponse>?>>
     suspend fun getResultDetails(resultId: Long): ServiceResult<ResultDetailsResponse>
     fun getResultsByTitle(resultTitle: String?): Flow<ServiceResult<List<ResultResponse>?>>
-    suspend fun getResultsBySellerId(sellerId: Long): ServiceResult<List<ResultResponse>?>
-    suspend fun getResultsBySellerCategoryId(sellerCategoryId: Int): ServiceResult<List<ResultResponse>?>
-    suspend fun getResultsByResultCategoryId(resultCategoryId: Int): ServiceResult<List<ResultResponse>?>
-    suspend fun getResultsByFoodCategoryId(foodCategoryId: Int): ServiceResult<List<ResultResponse>?>
+    fun getResultsBySellerId(sellerId: Long): Flow<ServiceResult<List<ResultResponse>?>>
+    fun getResultsBySellerCategoryId(sellerCategoryId: Int): Flow<ServiceResult<List<ResultResponse>?>>
+    fun getResultsByResultCategoryId(resultCategoryId: Int): Flow<ServiceResult<List<ResultResponse>?>>
+    fun getResultsByFoodCategoryId(foodCategoryId: Int): Flow<ServiceResult<List<ResultResponse>?>>
     fun getResultsByVoteCount(voteCount: Long): Flow<ServiceResult<List<ResultResponse>?>>
     fun getResultsByRating(rating: Double): Flow<ServiceResult<List<ResultResponse>?>>
     suspend fun updateResult(resultId: Long, result: Result): ServiceResult<Boolean>
