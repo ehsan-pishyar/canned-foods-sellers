@@ -24,20 +24,26 @@ class LocationRepositoryImpl @Inject constructor(
     private val locationDao: LocationDao
 ): LocationRepository {
 
-    override suspend fun getStates(): ServiceResult<List<StateResponse>?> {
+    override fun getStates(): Flow<ServiceResult<List<StateResponse>?>> = flow {
+        emit(ServiceResult.Loading(isLoading = true))
+
         val remoteStates = try {
             locationApiService.getStates()
         } catch (e: IOException) {
             e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
         } catch (e: Exception) {
             e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
-        }
+            emit(ServiceResult.Error(data = null, message = e.message))
+        } as StateResponseDto
 
         remoteStates.let {
-            return ServiceResult.Success(data = listOf(it.toEntity().toDomain()))
+            emit(ServiceResult.Success(data = listOf(it.toEntity().toDomain())))
         }
+    }
+
+    override suspend fun getStateById(stateId: Int): ServiceResult<StateResponse> {
+        TODO("Not yet implemented")
     }
 
     override fun getStatesByTitle(stateTitle: String?): Flow<ServiceResult<List<StateResponse>?>> = flow {

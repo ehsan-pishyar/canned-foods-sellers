@@ -2,6 +2,7 @@ package ir.androad.repository.data_source
 
 import ir.androad.cache.AppDatabase
 import ir.androad.domain.models.Seller
+import ir.androad.domain.models.responses.SellerDetailsResponse
 import ir.androad.domain.models.responses.SellerResponse
 import ir.androad.domain.repositories.SellerRepository
 import ir.androad.domain.utils.ServiceResult
@@ -68,9 +69,9 @@ class SellerRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun getSellerById(id: Long): ServiceResult<SellerResponse> {
+    override suspend fun getSellerDetails(id: Long): ServiceResult<SellerDetailsResponse> {
         val remoteSeller = try {
-            sellerApiService.getSellerById(id)
+            sellerApiService.getSellerDetails(id)
         } catch (e: IOException) {
             e.printStackTrace()
             return ServiceResult.Error(data = null, message = e.message)

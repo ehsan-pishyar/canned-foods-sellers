@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
 
-    suspend fun getStates(): ServiceResult<List<StateResponse>?>
+    fun getStates(): Flow<ServiceResult<List<StateResponse>?>>
+    suspend fun getStateById(stateId: Int): ServiceResult<StateResponse>
     fun getStatesByTitle(stateTitle: String?): Flow<ServiceResult<List<StateResponse>?>>
 
     fun getCities(stateId: Int): Flow<ServiceResult<List<CityResponse>?>>

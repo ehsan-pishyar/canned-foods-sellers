@@ -2,6 +2,7 @@ package ir.androad.network.services
 
 import ir.androad.network.models.SellerDto
 import ir.androad.network.models.responses.SellerCommentResponseDto
+import ir.androad.network.models.responses.SellerDetailsResponseDto
 import ir.androad.network.models.responses.SellerRatingsResponseDto
 import ir.androad.network.models.responses.SellerResponseDto
 import retrofit2.http.*
@@ -17,9 +18,9 @@ interface SellerApiService {
     suspend fun getSellers(): SellerResponseDto
 
     @GET("/sellers")
-    suspend fun getSellerById(
+    suspend fun getSellerDetails(
         @Query("id") id: Long
-    ): SellerResponseDto
+    ): SellerDetailsResponseDto
 
     @GET("/sellers")
     suspend fun getSellersByTitle(

@@ -13,9 +13,6 @@ interface SellerDao {
     @Query("SELECT * FROM `Seller_Table`")
     suspend fun fetchSellers(): List<SellerResponseEntity>?
 
-    @Query("SELECT * FROM `Seller_Table` WHERE id = :sellerId")
-    suspend fun fetchSellerById(sellerId: Long?): SellerResponseEntity
-
     @Query("SELECT * FROM `Seller_Details_Table` WHERE id = :sellerId")
     suspend fun fetchSellerDetails(sellerId: Long?): SellerDetailsResponseEntity
 
