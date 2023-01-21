@@ -55,7 +55,7 @@ class UserDataStoreDataSource @Inject constructor(
                 email
             }.catch {
                 if (it is IOException) {
-                    emit("")
+                    it.cause
                 } else {
                     throw it
                 }
@@ -69,7 +69,7 @@ class UserDataStoreDataSource @Inject constructor(
                 password
             }.catch {
                 if (it is IOException) {
-                    emit("")
+                    it.cause
                 } else {
                     throw it
                 }

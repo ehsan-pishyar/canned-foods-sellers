@@ -1,14 +1,14 @@
 package ir.androad.cannedfoods.viewmodels
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.androad.domain.models.responses.SellerDetailsResponse
-import ir.androad.domain.use_cases.result.GetResultDetailsUseCase
 import ir.androad.domain.use_cases.seller.GetSellerDetailsUseCase
 import ir.androad.domain.utils.ServiceResult
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,30 +18,42 @@ class DashboardViewModel @Inject constructor(
 ): ViewModel() {
 
     init {
-
+        getSellerDetails(1)
     }
 
-    private val _sellerDetailsState = MutableStateFlow<SellerDetailsState>(SellerDetailsState.Loading)
-    val sellerDetailsState: StateFlow<SellerDetailsState> get() = _sellerDetailsState
+    var state by mutableStateOf(SellerDetailsState())
 
     fun getSellerDetails(sellerId: Long) {
         viewModelScope.launch {
-            _sellerDetailsState.value = SellerDetailsState.Loading
+            state = state.copy(
+                isLoading = true,
+                sellerDetails = null,
+                isError = null
+            )
             when(val result = getSellerDetailsUseCase.invoke(sellerId)) {
                 is ServiceResult.Success -> {
-                    _sellerDetailsState.value = SellerDetailsState.SellerDetails(result.data!!)
+                    state = state.copy(
+                        isLoading = false,
+                        sellerDetails = result.data,
+                        isError = null
+                    )
                 }
-                else -> {
-                    _sellerDetailsState.value = SellerDetailsState.Error(result.message)
+                is ServiceResult.Error -> {
+                    state = state.copy(
+                        isLoading = false,
+                        sellerDetails = null,
+                        isError = result.message
+                    )
                 }
+                else -> Unit
             }
         }
     }
 
 }
 
-sealed interface SellerDetailsState {
-    object Loading: SellerDetailsState
-    data class SellerDetails(val sellerDetailsResponse: SellerDetailsResponse): SellerDetailsState
-    data class Error(val error: String?): SellerDetailsState
-}
+data class SellerDetailsState(
+    val isLoading: Boolean = false,
+    val isError: String? = null,
+    val sellerDetails: SellerDetailsResponse? = null
+)

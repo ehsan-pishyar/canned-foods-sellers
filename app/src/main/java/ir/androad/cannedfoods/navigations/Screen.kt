@@ -1,6 +1,7 @@
 package ir.androad.cannedfoods.navigations
 
 sealed class StartScreens(val route: String) {
+    object Splash: StartScreens(route = "splash")
     object OnBoarding: StartScreens(route = "onboarding")
 }
 
