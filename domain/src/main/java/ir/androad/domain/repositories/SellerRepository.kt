@@ -10,7 +10,7 @@ interface SellerRepository {
 
     suspend fun insertSeller(seller: Seller): ServiceResult<Boolean>
     fun getSellers(): Flow<ServiceResult<List<SellerResponse>?>>
-    suspend fun getSellerDetails(id: Long): ServiceResult<SellerDetailsResponse>
+    fun getSellerDetails(id: Long): Flow<ServiceResult<SellerDetailsResponse>>
     fun getSellersByTitle(title: String?): Flow<ServiceResult<List<SellerResponse>?>>
     fun getSellersByDescription(description: String?): Flow<ServiceResult<List<SellerResponse>?>>
     fun getSellersByLocationTitle(locationTitle: String?): Flow<ServiceResult<List<SellerResponse>?>>

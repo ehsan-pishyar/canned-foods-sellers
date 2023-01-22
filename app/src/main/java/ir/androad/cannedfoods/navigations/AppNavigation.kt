@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import ir.androad.cannedfoods.viewmodels.SplashScreenViewModel
 import ir.androad.cannedfoods.views.auth.ForgotPasswordScreen
 import ir.androad.cannedfoods.views.auth.LoginScreen
 import ir.androad.cannedfoods.views.auth.PasswordRecoveryScreen
@@ -16,12 +15,13 @@ import ir.androad.cannedfoods.views.main.FoodsScreen
 import ir.androad.cannedfoods.views.main.IncomesScreen
 import ir.androad.cannedfoods.views.main.OrdersScreen
 import ir.androad.cannedfoods.views.start.OnBoardingScreen
+import ir.androad.cannedfoods.views.start.SplashScreen
 
 @Composable
 fun AppNavigation(
     navController: NavHostController,
     startDestination: String
-    ) {
+) {
 
     NavHost(
         route = Graph.ROOT,
@@ -40,8 +40,9 @@ fun NavGraphBuilder.addStartTopLevel(
 ) {
     navigation(
         route = Graph.START,
-        startDestination = StartScreens.OnBoarding.route
+        startDestination = StartScreens.Splash.route
     ) {
+        addSplash(navController = navController)
         addOnBoarding(navController = navController)
     }
 }
@@ -71,6 +72,27 @@ fun NavGraphBuilder.addMainTopLevel(
         addFoods(navController)
         addOrders(navController)
         addIncomes(navController)
+    }
+}
+
+private fun NavGraphBuilder.addSplash(
+    navController: NavHostController
+) {
+    composable(route = StartScreens.Splash.route) {
+        SplashScreen(
+            toOnBoardingScreen = {
+                navController.popBackStack()
+                navController.navigate(JetStartScreens.OnBoarding.createRoute(StartScreens.OnBoarding))
+                                 },
+            toLoginScreen = {
+                navController.popBackStack()
+                navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login))
+            },
+            toDashboardScreen = {
+                navController.popBackStack()
+                navController.navigate(JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard))
+            }
+        )
     }
 }
 

@@ -21,8 +21,8 @@ class SplashScreenViewModel @Inject constructor(
     private val getUserByEmailAndPasswordUseCase: GetUserByEmailAndPasswordUseCase
 ): ViewModel() {
 
-    private val _isLoading: MutableState<Boolean> = mutableStateOf(true)
-    val isLoading: State<Boolean> = _isLoading
+    private val _isOnBoardingCompleted: MutableState<Boolean> = mutableStateOf(false)
+    val isOnBoardingCompleted: State<Boolean> = _isOnBoardingCompleted
 
     private val _startDestination: MutableState<String> = mutableStateOf(Graph.START)
     val startDestination: State<String> = _startDestination
@@ -30,17 +30,13 @@ class SplashScreenViewModel @Inject constructor(
     private val _isUserLoggedIn: MutableState<Boolean> = mutableStateOf(false)
     val isUserLoggedIn: State<Boolean> = _isUserLoggedIn
 
-    init {
-        readOnBoardingState()
-    }
-
     fun saveOnBoardingState(completed: Boolean) {
         viewModelScope.launch {
             onBoardingDataStoreRepository.saveOnBoardingState(completed)
         }
     }
 
-    private fun readOnBoardingState() {
+    fun readOnBoardingState() {
         viewModelScope.launch {
             onBoardingDataStoreRepository.readOnBoardingState().collect { completed ->
                 if (completed) {
@@ -49,7 +45,7 @@ class SplashScreenViewModel @Inject constructor(
                     _startDestination.value = Graph.START
                 }
             }
-            _isLoading.value = false
+            _isOnBoardingCompleted.value = false
         }
     }
 

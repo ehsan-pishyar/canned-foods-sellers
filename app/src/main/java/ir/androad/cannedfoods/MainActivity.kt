@@ -9,13 +9,11 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.androad.cannedfoods.navigations.AppNavigation
 import ir.androad.cannedfoods.ui.theme.CannedFoodsTheme
 import ir.androad.cannedfoods.viewmodels.SplashScreenViewModel
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -23,12 +21,12 @@ class MainActivity : ComponentActivity() {
     private val splashViewModel: SplashScreenViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+//        installSplashScreen()
         super.onCreate(savedInstanceState)
-
-        installSplashScreen().setKeepOnScreenCondition {
-            !splashViewModel.isLoading.value
-        }
+//
+//        installSplashScreen().setKeepOnScreenCondition {
+//            !splashViewModel.isOnBoardingCompleted.value
+//        }
 
         setContent {
             CannedFoodsTheme {

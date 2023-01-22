@@ -10,6 +10,9 @@ interface SellerDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSeller(sellerResponseEntity: SellerResponseEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSellerDetails(sellerDetailsResponseEntity: SellerDetailsResponseEntity)
+
     @Query("SELECT * FROM `Seller_Table`")
     suspend fun fetchSellers(): List<SellerResponseEntity>?
 

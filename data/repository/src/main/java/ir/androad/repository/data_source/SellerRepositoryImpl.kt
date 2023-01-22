@@ -1,11 +1,13 @@
 package ir.androad.repository.data_source
 
-import ir.androad.cache.AppDatabase
+import ir.androad.cache.daos.SellerDao
+import ir.androad.domain.data_store.SellerDataStore
 import ir.androad.domain.models.Seller
 import ir.androad.domain.models.responses.SellerDetailsResponse
 import ir.androad.domain.models.responses.SellerResponse
 import ir.androad.domain.repositories.SellerRepository
 import ir.androad.domain.utils.ServiceResult
+import ir.androad.network.models.responses.SellerDetailsResponseDto
 import ir.androad.network.models.responses.SellerResponseDto
 import ir.androad.network.services.SellerApiService
 import ir.androad.repository.mappers.toDomain
@@ -18,10 +20,9 @@ import javax.inject.Inject
 
 class SellerRepositoryImpl @Inject constructor(
     private val sellerApiService: SellerApiService,
-    appDatabase: AppDatabase
+    private val sellerDao: SellerDao,
+    private val sellerDataStore: SellerDataStore
 ): SellerRepository {
-
-    private val sellerDao = appDatabase.sellerDao()
 
     override suspend fun insertSeller(seller: Seller): ServiceResult<Boolean> {
         val sellerEntity = seller.toEntity()
@@ -39,6 +40,7 @@ class SellerRepositoryImpl @Inject constructor(
 
         remoteSeller.let { sellerResponseDto ->
             sellerDao.insertSeller(sellerResponseDto.toEntity())
+            sellerDataStore.saveSellerId(sellerResponseDto.id!!)
             return ServiceResult.Success(data = true)
         }
     }
@@ -69,20 +71,24 @@ class SellerRepositoryImpl @Inject constructor(
         emit(ServiceResult.Loading(isLoading = false))
     }
 
-    override suspend fun getSellerDetails(id: Long): ServiceResult<SellerDetailsResponse> {
+    override fun getSellerDetails(id: Long): Flow<ServiceResult<SellerDetailsResponse>> = flow {
+        emit(ServiceResult.Loading(isLoading = true))
         val remoteSeller = try {
             sellerApiService.getSellerDetails(id)
         } catch (e: IOException) {
             e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
+            emit(ServiceResult.Error(data = null, message = e.message))
         } catch (e: Exception) {
             e.printStackTrace()
-            return ServiceResult.Error(data = null, message = e.message)
-        }
+            emit(ServiceResult.Error(data = null, message = e.message))
+        } as SellerDetailsResponseDto
 
         remoteSeller.let {
-            return ServiceResult.Success(remoteSeller.toEntity().toDomain())
+            sellerDao.insertSellerDetails(it.toEntity())
+            emit(ServiceResult.Success(sellerDao.fetchSellerDetails(sellerId = id).toDomain()))
         }
+
+        emit(ServiceResult.Loading(isLoading = false))
     }
 
     override fun getSellersByTitle(title: String?): Flow<ServiceResult<List<SellerResponse>?>> = flow {
