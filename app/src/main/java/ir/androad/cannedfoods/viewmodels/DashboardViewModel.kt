@@ -27,12 +27,8 @@ class DashboardViewModel @Inject constructor(
 
     private fun getSellerDetails() {
         viewModelScope.launch {
-            state = state.copy(
-                isLoading = true,
-                sellerDetails = null,
-                isError = null
-            )
-            getSellerDetailsUseCase.invoke(sellerDataStore.readSellerId()).collect {
+            state = state.copy(isLoading = true)
+            getSellerDetailsUseCase.invoke(sellerDataStore.readSellerId().toString().toLong()).collect {
                 when(it) {
                     is ServiceResult.Success -> {
                         state = state.copy(

@@ -48,31 +48,31 @@ class UserDataStoreDataSource @Inject constructor(
             }
     }
 
-    override suspend fun readUserEmail(): String {
+    override suspend fun readUserEmail(): Flow<String?> {
         return dataStore.data
             .map { preferences ->
                 val email = preferences[UserKeys.userEmailKey]
                 email
             }.catch {
                 if (it is IOException) {
-                    it.cause
+                    emit("")
                 } else {
                     throw it
                 }
-            }.toString()
+            }
     }
 
-    override suspend fun readUserPassword(): String {
+    override suspend fun readUserPassword(): Flow<String?> {
         return dataStore.data
             .map { preferences ->
                 val password = preferences[UserKeys.userPasswordKey]
                 password
             }.catch {
                 if (it is IOException) {
-                    it.cause
+                    emit("")
                 } else {
                     throw it
                 }
-            }.toString()
+            }
     }
 }

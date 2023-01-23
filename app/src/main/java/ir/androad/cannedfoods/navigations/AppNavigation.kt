@@ -19,14 +19,14 @@ import ir.androad.cannedfoods.views.start.SplashScreen
 
 @Composable
 fun AppNavigation(
-    navController: NavHostController,
-    startDestination: String
+    navController: NavHostController
+    //startDestination: String
 ) {
 
     NavHost(
         route = Graph.ROOT,
         navController = navController,
-        startDestination = startDestination //Screen.Dashboard.route
+        startDestination = Graph.START //Screen.Dashboard.route //startDestination
     ) {
         addStartTopLevel(navController = navController)
         addAuthTopLevel(navController = navController)

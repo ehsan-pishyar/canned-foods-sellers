@@ -31,6 +31,9 @@ fun SplashScreen(
     viewModel: SplashScreenViewModel = hiltViewModel()
 ) {
 
+    val isOnBoardingCompleted = viewModel.checkOnBoardingState()
+    val isUserLoggedIn = viewModel.checkUserLoginState()
+
     val scale = remember {
         Animatable(0f)
     }
@@ -46,7 +49,15 @@ fun SplashScreen(
                 })
         )
         delay(3000L)
-        viewModel.readOnBoardingState()
+        if (isOnBoardingCompleted) {
+            if (isUserLoggedIn) {
+                toDashboardScreen()
+            } else {
+                toLoginScreen()
+            }
+        } else {
+            toOnBoardingScreen()
+        }
     }
 
     Surface(
