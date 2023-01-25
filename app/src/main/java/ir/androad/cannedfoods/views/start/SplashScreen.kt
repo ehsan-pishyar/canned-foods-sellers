@@ -13,7 +13,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,9 +30,6 @@ fun SplashScreen(
     viewModel: SplashScreenViewModel = hiltViewModel()
 ) {
 
-    val isOnBoardingCompleted = viewModel.checkOnBoardingState()
-    val isUserLoggedIn = viewModel.checkUserLoginState()
-
     val scale = remember {
         Animatable(0f)
     }
@@ -49,13 +45,16 @@ fun SplashScreen(
                 })
         )
         delay(3000L)
-        if (isOnBoardingCompleted) {
-            if (isUserLoggedIn) {
+
+        if (viewModel.isOnBoardingCompleted.value) {
+            println(viewModel.isOnBoardingCompleted.value)
+            if (viewModel.isUserLoggedIn.value) {
                 toDashboardScreen()
             } else {
                 toLoginScreen()
             }
         } else {
+            println("ELSE")
             toOnBoardingScreen()
         }
     }
@@ -81,13 +80,4 @@ fun SplashScreen(
             JetText(text = "جت فود فروشندگان")
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewSplashScreen() {
-    SplashScreen(
-        toOnBoardingScreen = { /*TODO*/ },
-        toLoginScreen = { /*TODO*/ },
-        toDashboardScreen = { /*TODO*/ })
 }

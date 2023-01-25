@@ -13,21 +13,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import ir.androad.cannedfoods.components.JetTextField
 import ir.androad.cannedfoods.components.JetButton
 import ir.androad.cannedfoods.components.JetText
 import ir.androad.cannedfoods.components.addSocialButtons
 import ir.androad.cannedfoods.ui.theme.*
+import ir.androad.cannedfoods.viewmodels.LoginViewModel
 
 @Composable
 fun LoginScreen(
     toRegisterScreen: () -> Unit,
     toForgotPasswordScreen: () -> Unit,
-    toDashboardScreen: () -> Unit
+    toDashboardScreen: () -> Unit,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -129,7 +133,16 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             JetButton(
-                onClick = { toDashboardScreen() },
+                onClick = {
+                    viewModel.getUserByEmailAndPassword(email, password)
+                    if (state.loading) {
+                        // Indicator on button
+                    } else if (state.error == null) {
+                        // Snack bar
+                    } else if (state.success) {
+                        toDashboardScreen()
+                    }
+                },
                 width = 0,
                 text = "ورود",
             )
@@ -216,7 +229,9 @@ fun LoginScreen(
 @Composable
 @Preview
 fun LoginScreenPreview() {
-    LoginScreen(toRegisterScreen = { /*TODO*/ }, toForgotPasswordScreen = { /*TODO*/ }) {
-
-    }
+    LoginScreen(
+        toRegisterScreen = {},
+        toForgotPasswordScreen = {},
+        toDashboardScreen = {}
+    )
 }

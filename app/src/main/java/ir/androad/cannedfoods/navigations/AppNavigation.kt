@@ -82,15 +82,15 @@ private fun NavGraphBuilder.addSplash(
         SplashScreen(
             toOnBoardingScreen = {
                 navController.popBackStack()
-                navController.navigate(JetStartScreens.OnBoarding.createRoute(StartScreens.OnBoarding))
+                navController.navigate(StartScreens.OnBoarding.route)
                                  },
             toLoginScreen = {
                 navController.popBackStack()
-                navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login))
+                navController.navigate(AuthScreens.Login.route)
             },
             toDashboardScreen = {
                 navController.popBackStack()
-                navController.navigate(JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard))
+                navController.navigate(MainScreens.Dashboard.route)
             }
         )
     }
@@ -103,7 +103,7 @@ private fun NavGraphBuilder.addOnBoarding(
         OnBoardingScreen(
             toLoginScreen = {
                 navController.popBackStack()
-                navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login))
+                navController.navigate(AuthScreens.Login.route)
             }
         )
     }
@@ -115,25 +115,13 @@ private fun NavGraphBuilder.addLogin(
     composable(route = AuthScreens.Login.route) {
         LoginScreen(
             toRegisterScreen = {
-                navController.navigate(
-                    JetAuthScreens.Register.createRoute(
-                        AuthScreens.Register
-                    )
-                )
+                navController.navigate(AuthScreens.Register.route)
             },
             toForgotPasswordScreen = {
-                navController.navigate(
-                    JetAuthScreens.ForgotPassword.createRoute(
-                        AuthScreens.ForgotPassword
-                    )
-                )
+                navController.navigate(AuthScreens.ForgotPassword.route)
             },
             toDashboardScreen = {
-                navController.navigate(
-                    JetMainScreens.Dashboard.createRoute(
-                        MainScreens.Dashboard
-                    )
-                )
+                navController.navigate(MainScreens.Dashboard.route)
             }
         )
     }
@@ -144,8 +132,8 @@ private fun NavGraphBuilder.addRegister(
 ) {
     composable(route = AuthScreens.Register.route) {
         RegisterScreen(
-            toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) },
-            toDashboardScreen = { navController.navigate(JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard)) }
+            toLoginScreen = { navController.navigate(AuthScreens.Login.route) },
+            toDashboardScreen = { navController.navigate(MainScreens.Dashboard.route) }
         )
     }
 }
@@ -155,8 +143,8 @@ private fun NavGraphBuilder.addForgotPassword(
 ) {
     composable(route = AuthScreens.ForgotPassword.route) {
         ForgotPasswordScreen(
-            toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) },
-            toRecoveryPasswordScreen = {navController.navigate(JetAuthScreens.PasswordRecovery.createRoute(AuthScreens.PasswordRecovery))}
+            toLoginScreen = { navController.navigate(AuthScreens.Login.route) },
+            toRecoveryPasswordScreen = {navController.navigate(AuthScreens.PasswordRecovery.route)}
         )
     }
 }
@@ -166,8 +154,8 @@ private fun NavGraphBuilder.addPasswordRecovery(
 ) {
     composable(route = AuthScreens.PasswordRecovery.route) {
         PasswordRecoveryScreen(
-            toLoginScreen = { navController.navigate(JetAuthScreens.Login.createRoute(AuthScreens.Login)) },
-            toDashboardScreen = { navController.navigate(JetMainScreens.Dashboard.createRoute(MainScreens.Dashboard)) }
+            toLoginScreen = { navController.navigate(AuthScreens.Login.route) },
+            toDashboardScreen = { navController.navigate(MainScreens.Dashboard.route) }
         )
     }
 }
@@ -178,7 +166,7 @@ private fun NavGraphBuilder.addDashboard(
     composable(route = MainScreens.Dashboard.route) {
         DashboardScreen(
             toRegisterScreen = {
-                navController.navigate(route = JetAuthScreens.Register.createRoute(AuthScreens.Register))
+                navController.navigate(AuthScreens.Register.route)
             }
         )
     }
