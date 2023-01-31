@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import ir.androad.cannedfoods.utils.emailRegex
 import ir.androad.domain.models.User
 import ir.androad.domain.models.responses.UserResponse
 import ir.androad.domain.use_cases.user.GetUsersByEmailUseCase
@@ -20,19 +21,20 @@ class RegisterViewModel @Inject constructor(
     private val getUsersByEmailUseCase: GetUsersByEmailUseCase
 ): ViewModel() {
 
-    var state by mutableStateOf(RegisterUserState())
+    var userState by mutableStateOf(RegisterUserState())
+    var validationState by mutableStateOf(UserValidationState())
 
     fun getUsersByEmail(email: String?) {
         viewModelScope.launch {
             getUsersByEmailUseCase.invoke(email!!).collect { userResponse ->
                 when(userResponse) {
                     is ServiceResult.Loading -> {
-                        state = state.copy(
+                        userState = userState.copy(
                             loading = true
                         )
                     }
                     is ServiceResult.Success -> {
-                        state = state.copy(
+                        userState = userState.copy(
                             loading = false,
                             success = true,
                             users = userResponse.data,
@@ -40,7 +42,7 @@ class RegisterViewModel @Inject constructor(
                         )
                     }
                     is ServiceResult.Error -> {
-                        state = state.copy(
+                        userState = userState.copy(
                             loading = false,
                             success = false,
                             users = null,
@@ -54,7 +56,51 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun insertUser(user: User) {
+        viewModelScope.launch {
+            when(val userInsertedState = insertUserUseCase.invoke(user)) {
+                is ServiceResult.Success -> {
+                    userState = userState.copy(
+                        loading = false,
+                        success = true,
+                        userInserted = true
+                    )
+                }
+                is ServiceResult.Error -> {
+                    userState = userState.copy(
+                        loading = false,
+                        success = false,
+                        userInserted = false
+                    )
+                }
+                else -> Unit
+            }
+        }
+    }
 
+    fun emailValidation(email: String?) {
+        viewModelScope.launch {
+            emailRegex(email).collect {
+                when(it) {
+                    is ServiceResult.Success -> {
+                        validationState = validationState.copy(
+                            emailValidationIsSuccessful = true
+                        )
+                    }
+                    is ServiceResult.Error -> {
+                        validationState = validationState.copy(
+                            emailValidationIsSuccessful = false
+                        )
+                    }
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    fun passwordValidation(password: String?) {
+        viewModelScope.launch {
+
+        }
     }
 }
 
@@ -62,5 +108,12 @@ data class RegisterUserState(
     val loading: Boolean = true,
     val success: Boolean = false,
     val users: List<UserResponse>? = emptyList(),
-    val error: String? = null
+    val error: String? = null,
+    val userInserted: Boolean = false
+)
+
+data class UserValidationState(
+    val emailValidationIsSuccessful: Boolean = false,
+    val passwordValidationIsSuccessful: Boolean = false
+
 )
